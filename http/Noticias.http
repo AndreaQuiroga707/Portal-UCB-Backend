@@ -1,0 +1,29 @@
+POST http://localhost:8080/api/v1/noticias/
+Content-Type: application/json
+
+{
+    "titulo": "Titulo da noticia 6",
+    "contenido": "",
+    "fechaPublicacion": "2021-05-05"
+}
+
+
+
+###
+GET http://localhost:8080/api/v1/noticias/
+###
+GET http://localhost:8080/api/v1/noticias/9
+###
+DELETE http://localhost:8080/api/v1/noticias/1
+
+###
+
+PUT http://localhost:8080/api/v1/noticias/
+Content-Type: application/json
+
+{
+  "titulo": "Titulo de la noticia",
+  "contenido": "Contenido de la noticia 2",
+  "fechaPublicacion": "2021-05-05",
+  "noticiaId": 2
+}

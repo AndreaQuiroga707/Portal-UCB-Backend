@@ -1,0 +1,30 @@
+POST http://localhost:8080/api/v1/eventos/
+Content-Type: application/json
+
+{
+  "nombre": "Evento 2",
+  "fechaInicio": "2021-10-10",
+  "fechaFin": "2021-10-11",
+  "descripcion": "descripcion 2"
+}
+
+###
+
+GET http://localhost:8080/api/v1/eventos/
+
+###
+
+GET http://localhost:8080/api/v1/eventos/1
+
+###
+
+PUT http://localhost:8080/api/v1/eventos/
+Content-Type: application/json
+
+{
+  "nombre": "Evento 2",
+  "fechaInicio": "2021-10-10",
+  "fechaFin": "2021-10-11",
+  "descripcion": "hola 2",
+  "eventoId": 2
+}

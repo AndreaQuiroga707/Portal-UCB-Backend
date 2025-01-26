@@ -1,0 +1,31 @@
+GET http://localhost:8080/api/v1/usuario/
+
+###
+POST http://localhost:8080/api/v1/usuario/
+Content-Type: application/json
+
+{
+  "nombre": "Mau2",
+  "apellido": "Pérez2",
+  "correoElectronico": "MAU@example.com",
+  "contrasenia": "contraseñamau_segura",
+  "tipoUsuario": 3
+}
+
+###
+
+PUT http://localhost:8080/api/v1/usuario/
+Content-Type: application/json
+
+{
+  "usuarioId": 1,
+  "nombre": "Juan Actualizado",
+  "apellido": "Pérez Actualizado",
+  "correoElectronico": "juan_actualizado@example.com",
+  "contrasenia": "nueva_contrasenia_segura",
+  "tipoUsuario": 2
+}
+
+###
+
+DELETE http://localhost:8080/api/v1/usuario/2

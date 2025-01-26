@@ -226,3 +226,6 @@ references docentes(docente_id);
 alter table docentes_de_carrera
 add foreign key (carrera_id)
 references carreras(carrera_id);
+
+ALTER TABLE usuarios
+    ADD COLUMN password VARCHAR(255) NOT NULL;

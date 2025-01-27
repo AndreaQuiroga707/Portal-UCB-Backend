@@ -1,5 +1,6 @@
-package bo.edu.ucb.backend.dto;
+package bo.edu.ucb.backend.entity;
 
+import bo.edu.ucb.backend.dto.FacultadesDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,7 +8,7 @@ import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name = "carreras")
-public class CarrerasDTO {
+public class Carreras {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer carreraId;
@@ -51,12 +52,12 @@ public class CarrerasDTO {
     private FacultadesDTO facultad;
     @ManyToOne
     @JoinColumn(name = "contacto_id")
-    private ContactosDTO contacto;
+    private Contactos contacto;
 
-    public CarrerasDTO() {
+    public Carreras() {
     }
 
-    public CarrerasDTO(Integer carreraId, String nombre, String siglas, String acreditacion, Integer duracionSemestres, String areasEstudio, String modalidadesGraduacion, String beneficios, String mallaCurricularPdf, String videoPromocional, String dondeTrabajar, String docentesTiempoHorario, FacultadesDTO facultad, ContactosDTO contacto) {
+    public Carreras(Integer carreraId, String nombre, String siglas, String acreditacion, Integer duracionSemestres, String areasEstudio, String modalidadesGraduacion, String beneficios, String mallaCurricularPdf, String videoPromocional, String dondeTrabajar, String docentesTiempoHorario, FacultadesDTO facultad, Contactos contacto) {
         this.carreraId = carreraId;
         this.nombre = nombre;
         this.siglas = siglas;
@@ -177,11 +178,11 @@ public class CarrerasDTO {
         this.facultad = facultad;
     }
 
-    public ContactosDTO getContacto() {
+    public Contactos getContacto() {
         return contacto;
     }
 
-    public void setContacto(ContactosDTO contacto) {
+    public void setContacto(Contactos contacto) {
         this.contacto = contacto;
     }
 

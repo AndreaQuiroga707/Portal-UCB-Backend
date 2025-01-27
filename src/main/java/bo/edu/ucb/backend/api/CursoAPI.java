@@ -1,7 +1,7 @@
 package bo.edu.ucb.backend.api;
 
 import bo.edu.ucb.backend.bl.CursoBL;
-import bo.edu.ucb.backend.dto.CursoDTO;
+import bo.edu.ucb.backend.entity.Cursos;
 import bo.edu.ucb.backend.dto.ResponseDTO;
 
 import org.slf4j.Logger;
@@ -25,13 +25,13 @@ public class CursoAPI {
     CursoBL cursoBL;
 
     @PostMapping("/")
-    public ResponseEntity<ResponseDTO> createCurso(@Valid @RequestBody CursoDTO cursoDTO, BindingResult result) {
+    public ResponseEntity<ResponseDTO> createCurso(@Valid @RequestBody Cursos cursos, BindingResult result) {
         try {
             LOG.info("Creando Curso"); // Log para crear un curso
             ResponseDTO response = new ResponseDTO();
             response.setStatus(201); // HttpStatus.CREATED
             response.setMessage("Curso creado");
-            response.setData(cursoBL.saveCurso(cursoDTO, result));
+            response.setData(cursoBL.saveCurso(cursos, result));
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
             LOG.error("Error al crear el curso", e); // Log en caso de error
@@ -48,11 +48,11 @@ public class CursoAPI {
     public ResponseEntity<ResponseDTO> findCursoById(@PathVariable Integer id) {
         try {
             LOG.info("Obteniendo curso por ID: {}", id); // Log para obtener un curso por ID
-            CursoDTO cursoDTO = cursoBL.findCursoById(id);
+            Cursos cursos = cursoBL.findCursoById(id);
             ResponseDTO response = new ResponseDTO();
             response.setStatus(200);
             response.setMessage("Curso encontrado");
-            response.setData(cursoDTO);
+            response.setData(cursos);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al encontrar el curso por ID: {}", id, e); // Log en caso de error
@@ -68,7 +68,7 @@ public class CursoAPI {
     public ResponseEntity<ResponseDTO> findAllCursos() {
         try {
             LOG.info("Obteniendo lista de cursos"); // Log para obtener la lista de cursos
-            Iterable<CursoDTO> cursos = cursoBL.findAllCursos();
+            Iterable<Cursos> cursos = cursoBL.findAllCursos();
             ResponseDTO response = new ResponseDTO();
             response.setStatus(200);
             response.setMessage("Lista de cursos encontrada");
@@ -86,14 +86,14 @@ public class CursoAPI {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseDTO> updateCurso(@PathVariable Integer id, @Valid @RequestBody CursoDTO cursoDTO, BindingResult result) {
+    public ResponseEntity<ResponseDTO> updateCurso(@PathVariable Integer id, @Valid @RequestBody Cursos cursos, BindingResult result) {
         try {
-            cursoDTO.setCursoId(id);
+            cursos.setCursoId(id);
             LOG.info("Actualizando curso por ID: {}", id); // Log para actualizar un curso por ID
             ResponseDTO response = new ResponseDTO();
             response.setStatus(200);
             response.setMessage("Curso actualizado");
-            response.setData(cursoBL.updateCurso(cursoDTO, result));
+            response.setData(cursoBL.updateCurso(cursos, result));
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al actualizar el curso por ID: {}", id, e); // Log en caso de error

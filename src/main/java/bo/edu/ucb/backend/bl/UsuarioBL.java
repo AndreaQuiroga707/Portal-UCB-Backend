@@ -1,24 +1,26 @@
 package bo.edu.ucb.backend.bl;
 
 import bo.edu.ucb.backend.dao.PasswordHistoryDAO;
-import bo.edu.ucb.backend.dto.PasswordHistoryDTO;
+import bo.edu.ucb.backend.dao.RolesDAO;
+import bo.edu.ucb.backend.entity.PasswordHistory;
 import bo.edu.ucb.backend.dto.UsuarioRequestDto;
 import bo.edu.ucb.backend.dto.UsuarioResponseDto;
+import bo.edu.ucb.backend.entity.Roles;
 import bo.edu.ucb.backend.security.SHA256PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import bo.edu.ucb.backend.dao.UsuarioDAO;
-import bo.edu.ucb.backend.dto.UsuarioDTO;
+import bo.edu.ucb.backend.entity.Usuarios;
 import org.springframework.validation.BindingResult;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class UsuarioBL {
 
+    @Autowired
+    private RolesDAO rolesDAO;
     @Autowired
     private PasswordHistoryDAO passwordHistoryDAO;
 
@@ -27,12 +29,12 @@ public class UsuarioBL {
 
     private final SHA256PasswordEncoder passwordEncoder = new SHA256PasswordEncoder();
 
-    public UsuarioDTO save(UsuarioDTO usuarioDTO, BindingResult result) {
+    public Usuarios save(Usuarios usuarios, BindingResult result) {
         if (result.hasErrors()) {
             String errorMessage = result.getFieldErrors().get(0).getDefaultMessage();
             throw new RuntimeException(errorMessage);
         }
-        return usuarioDAO.save(usuarioDTO);
+        return usuarioDAO.save(usuarios);
     }
 
     public void deleteUsuarioById(Integer usuarioId) {
@@ -43,11 +45,11 @@ public class UsuarioBL {
         }
     }
 
-    public UsuarioDTO findUsuarioById(Integer usuarioId) {
+    public Usuarios findUsuarioById(Integer usuarioId) {
         return usuarioDAO.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
-    public Iterable<UsuarioDTO> findAllUsuarios() {
+    public Iterable<Usuarios> findAllUsuarios() {
         try {
             return usuarioDAO.findAll();
         } catch (Exception e) {
@@ -55,88 +57,76 @@ public class UsuarioBL {
         }
     }
 
-    public UsuarioDTO updateUsuario(UsuarioDTO usuarioDTO, BindingResult result) {
+    public Usuarios updateUsuario(Usuarios usuarios, BindingResult result) {
         if (result.hasErrors()) {
             String errorMessage = result.getFieldErrors().get(0).getDefaultMessage();
             throw new RuntimeException(errorMessage);
         }
-        if (usuarioDAO.findById(usuarioDTO.getUsuarioId()).isPresent()) {
-            return usuarioDAO.save(usuarioDTO);
+        if (usuarioDAO.findById(usuarios.getUsuarioId()).isPresent()) {
+            return usuarioDAO.save(usuarios);
         } else {
             throw new RuntimeException("Usuario no encontrado");
         }
     }
 
     public UsuarioResponseDto registrarUsuario(UsuarioRequestDto request) {
-        if (usuarioDAO.existsByCorreoElectronico(request.getCorreoElectronico())) {
-            return new UsuarioResponseDto("El correo electrónico ya está registrado.", null, null, null, request.getCorreoElectronico());
+        try {
+            // Verificar si el correo ya está registrado
+            if (usuarioDAO.existsByCorreoElectronico(request.getCorreoElectronico())) {
+                throw new IllegalArgumentException("El correo electrónico ya está registrado.");
+            }
+
+            // Validar la contraseña
+            if (!esContrasenaValida(request.getPassword())) {
+                throw new IllegalArgumentException("La contraseña no cumple con las reglas de seguridad.");
+            }
+
+            // Crear el nuevo usuario
+            Usuarios usuario = new Usuarios();
+            usuario.setNombre(request.getNombre());
+            usuario.setApellido(request.getApellido());
+            usuario.setCorreoElectronico(request.getCorreoElectronico());
+            usuario.setPassword(passwordEncoder.hash(request.getPassword()));
+            usuario.setLastPasswordUpdate(new Date());
+
+            // Asignar rol predeterminado o basado en el request
+            Roles rol = rolesDAO.findByNombre(request.getRol());
+            if (rol == null) {
+                throw new IllegalArgumentException("El rol especificado no existe.");
+            }
+            usuario.setRol(rol);
+
+            // Guardar el usuario en la base de datos
+            usuarioDAO.save(usuario);
+
+            // Guardar la contraseña en el historial
+            savePasswordHistory(usuario.getUsuarioId(), usuario.getPassword());
+
+            // Retornar respuesta de éxito
+            return new UsuarioResponseDto("Usuario registrado con éxito.", null, usuario.getNombre(), usuario.getApellido(), usuario.getCorreoElectronico());
+
+        } catch (IllegalArgumentException e) {
+            // Manejo de errores de validación
+            return new UsuarioResponseDto(e.getMessage(), null, null, null, null);
+        } catch (Exception e) {
+            // Manejo de errores inesperados
+            throw new RuntimeException("Error al registrar el usuario: " + e.getMessage());
         }
-
-        if (!esContrasenaValida(request.getPassword())) {
-            return new UsuarioResponseDto("La contraseña no cumple con las reglas de seguridad.", null, null, null, null);
-        }
-
-        // Crear el nuevo usuario
-        UsuarioDTO usuario = new UsuarioDTO();
-        usuario.setNombre(request.getNombre());
-        usuario.setApellido(request.getApellido());
-        usuario.setCorreoElectronico(request.getCorreoElectronico());
-
-        // Hashear la contraseña y asignarla al usuario
-        String hashedPassword = passwordEncoder.hash(request.getPassword());
-        usuario.setPassword(hashedPassword);
-        usuario.setLastPasswordUpdate(new Date());
-
-        // Guardar el usuario en la base de datos
-        usuarioDAO.save(usuario);
-
-        // Guardar la contraseña inicial en el historial
-        savePasswordHistory(usuario.getUsuarioId(), hashedPassword);
-
-        return new UsuarioResponseDto("Usuario registrado con éxito.", null, usuario.getNombre(), usuario.getApellido(), usuario.getCorreoElectronico());
     }
 
-//    public String changePassword(int userId, String newPassword) {
-//        UsuarioDTO user = usuarioDAO.findById(userId).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-//
-//        if (isPasswordExpired(user.getLastPasswordUpdate())) {
-//            throw new RuntimeException("La contraseña ha expirado. Debe cambiarla.");
-//        }
-//
-//        if (isPasswordInHistory(userId, newPassword)) {
-//            throw new RuntimeException("No puede reutilizar una contraseña anterior.");
-//        }
-//
-//        String hashedPassword = passwordEncoder.hash(newPassword);
-//        user.setPassword(hashedPassword);
-//        user.setLastPasswordUpdate(new Date());
-//        usuarioDAO.save(user);
-//        savePasswordHistory(userId, hashedPassword);
-//
-//        return "Contraseña actualizada con éxito.";
-//    }
+
+
 
     private boolean esContrasenaValida(String password) {
         String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
         return password.matches(regex);
     }
 
-//    public boolean isPasswordExpired(Date lastPasswordUpdate) {
-//        long maxDuration = TimeUnit.DAYS.toMillis(90);
-//        return System.currentTimeMillis() - lastPasswordUpdate.getTime() > maxDuration;
-//    }
-//
-//    public boolean isPasswordInHistory(int userId, String newPassword) {
-//        List<String> oldPasswords = passwordHistoryDAO.findLast6PasswordsByUserId(userId);
-//        String hashedNewPassword = passwordEncoder.hash(newPassword);
-//        return oldPasswords.contains(hashedNewPassword);
-//    }
-
     private void savePasswordHistory(int userId, String hashedPassword) {
-        PasswordHistoryDTO history = new PasswordHistoryDTO();
+        PasswordHistory history = new PasswordHistory();
 
         // Buscar el usuario por ID
-        UsuarioDTO user = usuarioDAO.findById(userId).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Usuarios user = usuarioDAO.findById(userId).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         // Configurar los valores del historial
         history.setUserId(user); // Usa "user_id"

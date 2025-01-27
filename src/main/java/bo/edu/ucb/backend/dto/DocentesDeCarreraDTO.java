@@ -1,5 +1,6 @@
 package bo.edu.ucb.backend.dto;
 
+import bo.edu.ucb.backend.entity.Carreras;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,12 +22,12 @@ public class DocentesDeCarreraDTO {
 
     @ManyToOne
     @JoinColumn(name = "carrera_id")
-    private CarrerasDTO carrera;
+    private Carreras carrera;
     
     public DocentesDeCarreraDTO() {
     }
 
-    public DocentesDeCarreraDTO(Integer docenteDeCarreraId, DocentesDTO docente, CarrerasDTO carrera) {
+    public DocentesDeCarreraDTO(Integer docenteDeCarreraId, DocentesDTO docente, Carreras carrera) {
         this.docenteDeCarreraId = docenteDeCarreraId;
         this.docente = docente;
         this.carrera = carrera;
@@ -48,11 +49,11 @@ public class DocentesDeCarreraDTO {
         this.docente = docente;
     }
 
-    public CarrerasDTO getCarrera() {
+    public Carreras getCarrera() {
         return carrera;
     }
 
-    public void setCarrera(CarrerasDTO carrera) {
+    public void setCarrera(Carreras carrera) {
         this.carrera = carrera;
     }
 

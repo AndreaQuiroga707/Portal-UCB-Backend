@@ -1,13 +1,13 @@
 package bo.edu.ucb.backend.dao;
 
-import bo.edu.ucb.backend.dto.PasswordHistoryDTO;
+import bo.edu.ucb.backend.entity.PasswordHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface PasswordHistoryDAO extends JpaRepository<PasswordHistoryDTO, Integer> {
+public interface PasswordHistoryDAO extends JpaRepository<PasswordHistory, Integer> {
 
     @Query(value = "SELECT ph.hashed_password " +
             "FROM password_history ph " +

@@ -1,4 +1,4 @@
-package bo.edu.ucb.backend.dto;
+package bo.edu.ucb.backend.entity;
 
 import java.time.LocalDate;
 import jakarta.persistence.Entity;
@@ -11,7 +11,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "noticias")
-public class NoticiasDTO {
+public class Noticias {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer noticiaId;
@@ -23,10 +23,10 @@ public class NoticiasDTO {
     @NotNull(message = "La fecha de publicacion es obligatoria")
     private LocalDate fechaPublicacion;
 
-    public NoticiasDTO() {
+    public Noticias() {
     }
 
-    public NoticiasDTO(Integer noticiaId, String enlaceImagen, String titulo, String contenido, LocalDate fechaPublicacion) {
+    public Noticias(Integer noticiaId, String enlaceImagen, String titulo, String contenido, LocalDate fechaPublicacion) {
         this.noticiaId = noticiaId;
         this.enlaceImagen = enlaceImagen;
         this.titulo = titulo;

@@ -1,11 +1,11 @@
-package bo.edu.ucb.backend.dto;
+package bo.edu.ucb.backend.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 
 @Entity
 @Table(name = "suscripciones")
-public class SuscripcionesDTO {
+public class Suscripciones {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer suscripcionId;
@@ -13,10 +13,10 @@ public class SuscripcionesDTO {
     @Email(message = "El correo no es valido")
     private String correo;
 
-    public SuscripcionesDTO() {
+    public Suscripciones() {
     }
 
-    public SuscripcionesDTO(Integer suscripcionId, String correo) {
+    public Suscripciones(Integer suscripcionId, String correo) {
         this.suscripcionId = suscripcionId;
         this.correo = correo;
     }

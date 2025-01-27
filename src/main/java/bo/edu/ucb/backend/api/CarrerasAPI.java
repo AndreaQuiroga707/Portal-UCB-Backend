@@ -1,7 +1,7 @@
 package bo.edu.ucb.backend.api;
 
 import bo.edu.ucb.backend.bl.CarrerasBL;
-import bo.edu.ucb.backend.dto.CarrerasDTO;
+import bo.edu.ucb.backend.entity.Carreras;
 import bo.edu.ucb.backend.dto.ResponseDTO;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ public class CarrerasAPI {
     @GetMapping("/nombre/{nombreCarrera}")
     public ResponseEntity<?> findCarreraByNombre(@PathVariable String nombreCarrera) {
         try {
-            CarrerasDTO carrera = carrerasBL.findCarreraByNombre(nombreCarrera);
+            Carreras carrera = carrerasBL.findCarreraByNombre(nombreCarrera);
             if(carrera == null) {
                 return ResponseEntity.notFound().build(); // Devuelve un 404 si la carrera no se encuentra
             }
@@ -41,7 +41,7 @@ public class CarrerasAPI {
     @GetMapping("/facultad/{facultadId}")
     public ResponseEntity<?> findCarrerasByFacultadId(@PathVariable Integer facultadId) {
         try {
-            List<CarrerasDTO> carreras = carrerasBL.findCarrerasByFacultadId(facultadId);
+            List<Carreras> carreras = carrerasBL.findCarrerasByFacultadId(facultadId);
             if(carreras.isEmpty()) {
                 return ResponseEntity.notFound().build(); // Devuelve un 404 si la lista está vacía
             }
@@ -91,14 +91,14 @@ public class CarrerasAPI {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseDTO> saveCarreras(@Valid @RequestBody CarrerasDTO carrerasDTO, BindingResult result) {
+    public ResponseEntity<ResponseDTO> saveCarreras(@Valid @RequestBody Carreras carreras, BindingResult result) {
         try {
             LOG.info("Guardando carrera");
-            System.out.println("acreditacion: " + carrerasDTO.toString());
+            System.out.println("acreditacion: " + carreras.toString());
             ResponseDTO response = new ResponseDTO();
             response.setStatus(200);
             response.setMessage("Carrera guardada");
-            response.setData(carrerasBL.save(carrerasDTO, result));
+            response.setData(carrerasBL.save(carreras, result));
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al guardar la carrera", e);
@@ -130,13 +130,13 @@ public class CarrerasAPI {
     }
 
     @PutMapping("/")
-    public ResponseEntity<ResponseDTO> updateCarreras(@Valid @RequestBody CarrerasDTO carrerasDTO, BindingResult result) {
+    public ResponseEntity<ResponseDTO> updateCarreras(@Valid @RequestBody Carreras carreras, BindingResult result) {
         try {
             LOG.info("Actualizando carrera");
             ResponseDTO response = new ResponseDTO();
             response.setStatus(200);
             response.setMessage("Carrera actualizada");
-            response.setData(carrerasBL.updateCarreras(carrerasDTO, result));
+            response.setData(carrerasBL.updateCarreras(carreras, result));
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al actualizar la carrera", e);

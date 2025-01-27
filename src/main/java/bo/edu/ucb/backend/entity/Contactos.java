@@ -1,4 +1,4 @@
-package bo.edu.ucb.backend.dto;
+package bo.edu.ucb.backend.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "contactos")
-public class ContactosDTO implements Serializable {
+public class Contactos implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer contactoId;
@@ -31,10 +31,10 @@ public class ContactosDTO implements Serializable {
     private String movil;
 
 
-    public ContactosDTO() {
+    public Contactos() {
     }
 
-    public ContactosDTO(Integer contactoId, String ci, String nombre, String correo, String telefono, String movil) {
+    public Contactos(Integer contactoId, String ci, String nombre, String correo, String telefono, String movil) {
         this.contactoId = contactoId;
         this.ci = ci;
         this.nombre = nombre;

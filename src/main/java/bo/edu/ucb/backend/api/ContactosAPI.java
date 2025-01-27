@@ -1,6 +1,6 @@
 package bo.edu.ucb.backend.api;
 import bo.edu.ucb.backend.bl.ContactosBL;
-import bo.edu.ucb.backend.dto.ContactosDTO;
+import bo.edu.ucb.backend.entity.Contactos;
 import bo.edu.ucb.backend.dto.ResponseDTO;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -57,13 +57,13 @@ public class ContactosAPI {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseDTO> saveContactos(@Valid @RequestBody ContactosDTO contactosDTO, BindingResult result) {
+    public ResponseEntity<ResponseDTO> saveContactos(@Valid @RequestBody Contactos contactos, BindingResult result) {
         ResponseDTO response = new ResponseDTO();
         try{
             LOG.info("Guardando contacto");
             response.setStatus(200);
             response.setMessage("Contacto guardado");
-            response.setData(contactosBl.save(contactosDTO, result));
+            response.setData(contactosBl.save(contactos, result));
             return ResponseEntity.ok(response);
         } catch (Exception e){
             LOG.error("Error al guardar el contacto");
@@ -92,13 +92,13 @@ public class ContactosAPI {
     }
 
     @PutMapping("/")
-    public ResponseEntity<ResponseDTO> updateContacto(@Valid @RequestBody ContactosDTO contactosDTO, BindingResult result) {
+    public ResponseEntity<ResponseDTO> updateContacto(@Valid @RequestBody Contactos contactos, BindingResult result) {
         ResponseDTO response = new ResponseDTO();
         try{
             LOG.info("Actualizando contacto");
             response.setStatus(200);
             response.setMessage("Contacto actualizado");
-            response.setData(contactosBl.updateContactos(contactosDTO, result));
+            response.setData(contactosBl.updateContactos(contactos, result));
             return ResponseEntity.ok(response);
         } catch (Exception e){
             LOG.error("Error al actualizar el contacto");

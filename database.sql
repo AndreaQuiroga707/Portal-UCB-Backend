@@ -229,3 +229,24 @@ references carreras(carrera_id);
 
 ALTER TABLE usuarios
     ADD COLUMN password VARCHAR(255) NOT NULL;
+
+--CAMBIOS 26/1/25
+
+CREATE TABLE password_history (
+    history_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    hashed_password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES usuarios(usuario_id)
+);
+
+ALTER TABLE usuarios
+ADD COLUMN reset_token VARCHAR(255) DEFAULT NULL,
+ADD COLUMN reset_token_expiration TIMESTAMP DEFAULT NULL;
+
+ALTER TABLE usuarios ADD COLUMN failed_attempts INT DEFAULT 0;
+ALTER TABLE usuarios ADD COLUMN is_locked BOOLEAN DEFAULT FALSE; -- Indica si la cuenta está bloqueada
+ALTER TABLE usuarios ADD COLUMN lock_time TIMESTAMP NULL; -- Almacena el tiempo de bloqueo
+ALTER TABLE usuarios ADD COLUMN last_password_update TIMESTAMP NULL; -- Última actualización de contraseña
+
+ALTER TABLE usuarios ADD COLUMN rol_id INT DEFAULT NULL;

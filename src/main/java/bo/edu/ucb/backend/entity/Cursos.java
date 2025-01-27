@@ -1,10 +1,10 @@
-package bo.edu.ucb.backend.dto;
+package bo.edu.ucb.backend.entity;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "cursos")
-public class CursoDTO {
+public class Cursos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "curso_id")
@@ -19,10 +19,10 @@ public class CursoDTO {
     @Column(name = "descripcion", columnDefinition = "text")
     private String descripcion;
 
-    public CursoDTO() {
+    public Cursos() {
     }
 
-    public CursoDTO(Integer cursoId, String nombre, Integer programaId, String descripcion) {
+    public Cursos(Integer cursoId, String nombre, Integer programaId, String descripcion) {
         this.cursoId = cursoId;
         this.nombre = nombre;
         this.programaId = programaId;

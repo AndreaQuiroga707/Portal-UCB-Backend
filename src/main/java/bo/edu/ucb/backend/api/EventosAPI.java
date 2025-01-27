@@ -2,7 +2,7 @@ package bo.edu.ucb.backend.api;
 
 import bo.edu.ucb.backend.bl.EmailSenderBL;
 import bo.edu.ucb.backend.bl.EventosBL;
-import bo.edu.ucb.backend.dto.EventosDTO;
+import bo.edu.ucb.backend.entity.Eventos;
 import bo.edu.ucb.backend.dto.ResponseDTO;
 
 import org.slf4j.Logger;
@@ -64,14 +64,14 @@ public class EventosAPI {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseDTO> createEventos(@Valid @RequestBody EventosDTO eventosDTO, BindingResult result) {
+    public ResponseEntity<ResponseDTO> createEventos(@Valid @RequestBody Eventos eventos, BindingResult result) {
         try {
             LOG.info("Creando evento"); // Log para crear un evento
             ResponseDTO response = new ResponseDTO();
             response.setStatus(200);
             response.setMessage("Evento creado");
-            response.setData(eventosBL.save(eventosDTO, result));
-            emailSenderBL.sendEmailSuscripcion(eventosDTO.getNombre(), eventosDTO.getDescripcion());
+            response.setData(eventosBL.save(eventos, result));
+            emailSenderBL.sendEmailSuscripcion(eventos.getNombre(), eventos.getDescripcion());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al crear el evento", e); // Log en caso de error
@@ -103,13 +103,13 @@ public class EventosAPI {
     }
 
     @PutMapping("/")
-    public ResponseEntity<ResponseDTO> updateEventos(@Valid @RequestBody EventosDTO eventosDTO, BindingResult result) {
+    public ResponseEntity<ResponseDTO> updateEventos(@Valid @RequestBody Eventos eventos, BindingResult result) {
         try {
             LOG.info("Actualizando evento"); // Log para actualizar un evento
             ResponseDTO response = new ResponseDTO();
             response.setStatus(200);
             response.setMessage("Evento actualizado");
-            response.setData(eventosBL.updateEventos(eventosDTO, result));
+            response.setData(eventosBL.updateEventos(eventos, result));
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al actualizar el evento", e); // Log en caso de error

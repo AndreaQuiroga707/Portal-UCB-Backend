@@ -9,6 +9,7 @@ public class UsuarioRequestDto {
     private String apellido;
     private String correoElectronico;
     private String password;
+    private String rol;
 
 }
 

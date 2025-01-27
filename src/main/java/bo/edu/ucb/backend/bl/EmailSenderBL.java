@@ -1,6 +1,6 @@
 package bo.edu.ucb.backend.bl;
 
-import bo.edu.ucb.backend.dto.SuscripcionesDTO;
+import bo.edu.ucb.backend.entity.Suscripciones;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,13 +44,13 @@ public class EmailSenderBL {
 
     public void sendEmailSuscripcion(String subject, String body) {
         try {
-            List<SuscripcionesDTO> correos = suscripcionesBL.findAllSuscripcionesList();
+            List<Suscripciones> correos = suscripcionesBL.findAllSuscripcionesList();
             if (correos.isEmpty()) {
                 LOGGER.info("No hay correos para enviar.");
                 return;
             }
 
-            for (SuscripcionesDTO correo : correos) {
+            for (Suscripciones correo : correos) {
                 try {
                     SimpleMailMessage message = new SimpleMailMessage();
                     message.setFrom(fromEmail); // Usar el correo configurado en application.properties

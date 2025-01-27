@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import bo.edu.ucb.backend.bl.SuscripcionesBL;
 import bo.edu.ucb.backend.dto.ResponseDTO;
-import bo.edu.ucb.backend.dto.SuscripcionesDTO;
+import bo.edu.ucb.backend.entity.Suscripciones;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -25,7 +25,7 @@ public class SuscripcionesAPI {
     private SuscripcionesBL suscripcionesBL;
 
     @PostMapping("/")
-    public ResponseEntity<ResponseDTO> save(@RequestBody SuscripcionesDTO correo) {
+    public ResponseEntity<ResponseDTO> save(@RequestBody Suscripciones correo) {
         ResponseDTO response = new ResponseDTO();
         try {
             LOG.info("Creando suscripción");

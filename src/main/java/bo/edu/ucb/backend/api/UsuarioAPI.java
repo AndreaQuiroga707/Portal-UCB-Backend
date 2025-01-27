@@ -1,6 +1,7 @@
 package bo.edu.ucb.backend.api;
 import bo.edu.ucb.backend.bl.AuthBl;
 import bo.edu.ucb.backend.dto.*;
+import bo.edu.ucb.backend.entity.Usuarios;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,13 +64,13 @@ public class UsuarioAPI {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseDTO> createUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO, BindingResult result) {
+    public ResponseEntity<ResponseDTO> createUsuario(@Valid @RequestBody Usuarios usuarios, BindingResult result) {
         try {
             LOG.info("Creando usuario"); // Log para crear un usuario
             ResponseDTO response = new ResponseDTO();
             response.setStatus(200);
             response.setMessage("Usuario creado");
-            response.setData(usuarioBL.save(usuarioDTO, result));
+            response.setData(usuarioBL.save(usuarios, result));
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al crear el usuario", e); // Log en caso de error
@@ -101,13 +102,13 @@ public class UsuarioAPI {
     }
 
     @PutMapping("/")
-    public ResponseEntity<ResponseDTO> updateUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO, BindingResult result) {
+    public ResponseEntity<ResponseDTO> updateUsuario(@Valid @RequestBody Usuarios usuarios, BindingResult result) {
         try {
             LOG.info("Actualizando usuario"); // Log para actualizar un usuario
             ResponseDTO response = new ResponseDTO();
             response.setStatus(200);
             response.setMessage("Usuario actualizado");
-            response.setData(usuarioBL.updateUsuario(usuarioDTO, result));
+            response.setData(usuarioBL.updateUsuario(usuarios, result));
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al actualizar el usuario", e); // Log en caso de error

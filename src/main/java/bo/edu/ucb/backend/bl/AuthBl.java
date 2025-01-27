@@ -4,8 +4,8 @@ import bo.edu.ucb.backend.dao.PasswordHistoryDAO;
 import bo.edu.ucb.backend.dao.UsuarioDAO;
 import bo.edu.ucb.backend.dto.LoginRequestDto;
 import bo.edu.ucb.backend.dto.LoginResponseDto;
-import bo.edu.ucb.backend.dto.PasswordHistoryDTO;
-import bo.edu.ucb.backend.dto.UsuarioDTO;
+import bo.edu.ucb.backend.entity.PasswordHistory;
+import bo.edu.ucb.backend.entity.Usuarios;
 import bo.edu.ucb.backend.security.JwtTokenProvider;
 import bo.edu.ucb.backend.security.SHA256PasswordEncoder;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class AuthBl {
     }
 
     public LoginResponseDto authenticate(LoginRequestDto request) {
-        UsuarioDTO user = userRepository.findByCorreoElectronico(request.getCorreoElectronico());
+        Usuarios user = userRepository.findByCorreoElectronico(request.getCorreoElectronico());
 
         if (user == null) {
             throw new RuntimeException("Usuario no encontrado");
@@ -58,9 +58,10 @@ public class AuthBl {
 
         resetFailedAttempts(user);
 
-        String token = jwtTokenProvider.generateToken(user.getCorreoElectronico());
+        String token = jwtTokenProvider.generateToken(user.getCorreoElectronico(), user.getRol().getNombre());
         return new LoginResponseDto(token);
     }
+
 
     private boolean isPasswordExpired(Date lastPasswordUpdate) {
         long maxDuration = TimeUnit.DAYS.toMillis(60); // 60 días
@@ -69,7 +70,7 @@ public class AuthBl {
 
 
 
-    private void handleFailedLogin(UsuarioDTO user) {
+    private void handleFailedLogin(Usuarios user) {
         user.setFailedAttempts(user.getFailedAttempts() + 1);
         if (user.getFailedAttempts() >= 3) {
             user.setIsLocked(true);
@@ -78,19 +79,19 @@ public class AuthBl {
         userRepository.save(user);
     }
 
-    private boolean isAccountLocked(UsuarioDTO user) {
+    private boolean isAccountLocked(Usuarios user) {
         long lockDuration = TimeUnit.MINUTES.toMillis(30);
         return System.currentTimeMillis() - user.getLockTime().getTime() < lockDuration;
     }
 
-    private void resetFailedAttempts(UsuarioDTO user) {
+    private void resetFailedAttempts(Usuarios user) {
         user.setFailedAttempts(0);
         user.setIsLocked(false);
         userRepository.save(user);
     }
 
     public void generateResetToken(String email) {
-        UsuarioDTO user = userRepository.findByCorreoElectronico(email);
+        Usuarios user = userRepository.findByCorreoElectronico(email);
 
         if (user == null) {
             throw new RuntimeException("Usuario no encontrado");
@@ -111,7 +112,7 @@ public class AuthBl {
     }
 
     public void resetPasswordWithToken(String token, String newPassword) {
-        UsuarioDTO user = userRepository.findByResetToken(token);
+        Usuarios user = userRepository.findByResetToken(token);
 
         if (user == null || user.getResetTokenExpiration().before(new Date())) {
             throw new RuntimeException("Token inválido o expirado");
@@ -143,30 +144,30 @@ public class AuthBl {
         userRepository.save(user);
     }
 
-    public void changePassword(int userId, String newPassword) {
-        UsuarioDTO user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        // Validar la nueva contraseña
-        if (!esContrasenaValida(newPassword)) {
-            throw new RuntimeException("La nueva contraseña no cumple con las reglas de seguridad");
-        }
-
-        // Verificar que no coincida con las últimas 6 contraseñas
-        if (isPasswordInHistory(user.getUsuarioId(), newPassword)) {
-            throw new RuntimeException("La nueva contraseña no puede coincidir con ninguna de las últimas 6 contraseñas.");
-        }
-
-        // Actualizar la contraseña
-        String hashedPassword = passwordEncoder.hash(newPassword);
-        user.setPassword(hashedPassword);
-        user.setLastPasswordUpdate(new Date());
-
-        // Guardar la contraseña en el historial
-        savePasswordToHistory(userId, hashedPassword);
-
-        userRepository.save(user);
-    }
+//    public void changePassword(int userId, String newPassword) {
+//        Usuarios user = userRepository.findById(userId)
+//                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+//
+//        // Validar la nueva contraseña
+//        if (!esContrasenaValida(newPassword)) {
+//            throw new RuntimeException("La nueva contraseña no cumple con las reglas de seguridad");
+//        }
+//
+//        // Verificar que no coincida con las últimas 6 contraseñas
+//        if (isPasswordInHistory(user.getUsuarioId(), newPassword)) {
+//            throw new RuntimeException("La nueva contraseña no puede coincidir con ninguna de las últimas 6 contraseñas.");
+//        }
+//
+//        // Actualizar la contraseña
+//        String hashedPassword = passwordEncoder.hash(newPassword);
+//        user.setPassword(hashedPassword);
+//        user.setLastPasswordUpdate(new Date());
+//
+//        // Guardar la contraseña en el historial
+//        savePasswordToHistory(userId, hashedPassword);
+//
+//        userRepository.save(user);
+//    }
 
 
     private boolean isPasswordInHistory(int userId, String newPassword) {
@@ -177,8 +178,8 @@ public class AuthBl {
     }
 
     private void savePasswordToHistory(int userId, String hashedPassword) {
-        PasswordHistoryDTO history = new PasswordHistoryDTO();
-        UsuarioDTO user;
+        PasswordHistory history = new PasswordHistory();
+        Usuarios user;
         user = userRepository.findByUsuarioId(userId);
         history.setUserId(user);
         history.setHashedPassword(hashedPassword);

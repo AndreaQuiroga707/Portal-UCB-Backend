@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import bo.edu.ucb.backend.bl.EmailSenderBL;
 import bo.edu.ucb.backend.bl.NoticiasBL;
-import bo.edu.ucb.backend.dto.EmailDTO;
-import bo.edu.ucb.backend.dto.NoticiasDTO;
+import bo.edu.ucb.backend.entity.Noticias;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,15 +65,15 @@ public class NoticiasAPI {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseDTO> createNoticias(@Valid @RequestBody NoticiasDTO noticiasDTO, BindingResult result) {
+    public ResponseEntity<ResponseDTO> createNoticias(@Valid @RequestBody Noticias noticias, BindingResult result) {
         try {
             LOG.info("Creando noticia"); // Log para crear una noticia
             ResponseDTO response = new ResponseDTO();
             response.setStatus(200);
             response.setMessage("Noticia creada");
-            response.setData(noticiasBl.save(noticiasDTO, result));
+            response.setData(noticiasBl.save(noticias, result));
 //            EmailDTO emailDTO = new EmailDTO("andrea.quiroga@ucb.edu.bo", noticiasDTO.getTitulo(), noticiasDTO.getContenido());
-            emailSenderBL.sendEmailSuscripcion(noticiasDTO.getTitulo(), noticiasDTO.getContenido());
+            emailSenderBL.sendEmailSuscripcion(noticias.getTitulo(), noticias.getContenido());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al crear la noticia", e); // Log en caso de error
@@ -106,13 +105,13 @@ public class NoticiasAPI {
     }
 
     @PutMapping("/")
-    public ResponseEntity<ResponseDTO> updateNoticias(@Valid @RequestBody NoticiasDTO noticiasDTO, BindingResult result) {
+    public ResponseEntity<ResponseDTO> updateNoticias(@Valid @RequestBody Noticias noticias, BindingResult result) {
         try {
             LOG.info("Actualizando noticia"); // Log para actualizar una noticia
             ResponseDTO response = new ResponseDTO();
             response.setStatus(200);
             response.setMessage("Noticia actualizada");
-            response.setData(noticiasBl.updateNoticias(noticiasDTO, result));
+            response.setData(noticiasBl.updateNoticias(noticias, result));
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al actualizar la noticia", e); // Log en caso de error

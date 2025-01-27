@@ -3,7 +3,7 @@ package bo.edu.ucb.backend.bl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import bo.edu.ucb.backend.dao.CursoDAO;
-import bo.edu.ucb.backend.dto.CursoDTO;
+import bo.edu.ucb.backend.entity.Cursos;
 import org.springframework.validation.BindingResult;
 import java.util.Optional;
 
@@ -16,20 +16,20 @@ public class CursoBL {
         this.cursoDAO = cursoDAO;
     }
 
-    public CursoDTO saveCurso(CursoDTO cursoDTO, BindingResult result) {
+    public Cursos saveCurso(Cursos cursos, BindingResult result) {
         if (result.hasErrors()) {
             String errorMessage = result.getFieldErrors().get(0).getDefaultMessage();
             throw new RuntimeException(errorMessage);
         }
-        return cursoDAO.save(cursoDTO);
+        return cursoDAO.save(cursos);
     }
 
-    public CursoDTO findCursoById(Integer cursoId) {
-        Optional<CursoDTO> cursoOptional = cursoDAO.findById(cursoId);
+    public Cursos findCursoById(Integer cursoId) {
+        Optional<Cursos> cursoOptional = cursoDAO.findById(cursoId);
         return cursoOptional.orElseThrow(() -> new RuntimeException("Curso no encontrado"));
     }
 
-    public Iterable<CursoDTO> findAllCursos() {
+    public Iterable<Cursos> findAllCursos() {
         try {
             return cursoDAO.findAll();
         } catch (Exception e) {
@@ -45,13 +45,13 @@ public class CursoBL {
         }
     }
 
-    public CursoDTO updateCurso(CursoDTO cursoDTO, BindingResult result) {
+    public Cursos updateCurso(Cursos cursos, BindingResult result) {
         if (result.hasErrors()) {
             String errorMessage = result.getFieldErrors().get(0).getDefaultMessage();
             throw new RuntimeException(errorMessage);
         }
-        if (cursoDAO.existsById(cursoDTO.getCursoId())) {
-            return cursoDAO.save(cursoDTO);
+        if (cursoDAO.existsById(cursos.getCursoId())) {
+            return cursoDAO.save(cursos);
         } else {
             throw new RuntimeException("Curso no encontrado");
         }

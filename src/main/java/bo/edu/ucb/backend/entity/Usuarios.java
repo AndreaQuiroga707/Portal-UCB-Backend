@@ -1,4 +1,4 @@
-package bo.edu.ucb.backend.dto;
+package bo.edu.ucb.backend.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "usuarios")
-public class UsuarioDTO {
+public class Usuarios {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer usuarioId;
@@ -50,6 +50,8 @@ public class UsuarioDTO {
     @Column(name = "reset_token_expiration")
     private Timestamp resetTokenExpiration = null;
 
-
+    @ManyToOne
+    @JoinColumn(name = "rol_id", nullable = false) // Relación uno-a-muchos con roles
+    private Roles rol;
 
 }

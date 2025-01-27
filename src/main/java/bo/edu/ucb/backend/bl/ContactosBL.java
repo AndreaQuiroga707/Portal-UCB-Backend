@@ -1,7 +1,7 @@
 package bo.edu.ucb.backend.bl;
 
 import bo.edu.ucb.backend.dao.ContactosDAO;
-import bo.edu.ucb.backend.dto.ContactosDTO;
+import bo.edu.ucb.backend.entity.Contactos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -14,7 +14,7 @@ public class ContactosBL {
     @Autowired
     private ContactosDAO contactosDAO;
 
-    public List<ContactosDTO> findAllContactos() {
+    public List<Contactos> findAllContactos() {
         try {
             return contactosDAO.findAll();
         } catch (Exception e) {
@@ -22,9 +22,9 @@ public class ContactosBL {
         }
     }
 
-    public ContactosDTO findContactosById(Integer id) {
+    public Contactos findContactosById(Integer id) {
         try {
-            Optional<ContactosDTO> contactosDTO = contactosDAO.findById(id);
+            Optional<Contactos> contactosDTO = contactosDAO.findById(id);
             if (contactosDTO.isPresent()) {
                 return contactosDTO.get();
             } else {
@@ -35,25 +35,25 @@ public class ContactosBL {
         }
     }
 
-    public ContactosDTO save(ContactosDTO contactosDTO, BindingResult result) {
+    public Contactos save(Contactos contactos, BindingResult result) {
         if (result.hasErrors()) {
             throw new RuntimeException(result.getFieldErrors().get(0).getDefaultMessage());
         }
-        return contactosDAO.save(contactosDTO);
+        return contactosDAO.save(contactos);
     }
 
-    public ContactosDTO deleteContactosById(Integer id) {
-        ContactosDTO contactosDTO = findContactosById(id);
-        if (contactosDTO != null) {
+    public Contactos deleteContactosById(Integer id) {
+        Contactos contactos = findContactosById(id);
+        if (contactos != null) {
             contactosDAO.deleteById(id);
         }
-        return contactosDTO;
+        return contactos;
     }
 
-    public ContactosDTO updateContactos(ContactosDTO contactosDTO, BindingResult result) {
+    public Contactos updateContactos(Contactos contactos, BindingResult result) {
         if (result.hasErrors()) {
             throw new RuntimeException(result.getFieldErrors().get(0).getDefaultMessage());
         }
-        return contactosDAO.save(contactosDTO);
+        return contactosDAO.save(contactos);
     }
 }

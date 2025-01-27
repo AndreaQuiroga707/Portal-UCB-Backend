@@ -1,7 +1,7 @@
 package bo.edu.ucb.backend.bl;
 
 import bo.edu.ucb.backend.dao.SuscripcionesDAO;
-import bo.edu.ucb.backend.dto.SuscripcionesDTO;
+import bo.edu.ucb.backend.entity.Suscripciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class SuscripcionesBL {
     @Autowired
     private SuscripcionesDAO suscripcionesDAO;
 
-    public Iterable<SuscripcionesDTO> findAllSuscripciones() {
+    public Iterable<Suscripciones> findAllSuscripciones() {
         try {
             return suscripcionesDAO.findAll();
         } catch (Exception e) {
@@ -21,7 +21,7 @@ public class SuscripcionesBL {
         }
     }
 
-    public List<SuscripcionesDTO> findAllSuscripcionesList() {
+    public List<Suscripciones> findAllSuscripcionesList() {
         try {
             return suscripcionesDAO.findAll();
         } catch (Exception e) {
@@ -29,24 +29,24 @@ public class SuscripcionesBL {
         }
     }
 
-    public SuscripcionesDTO save(SuscripcionesDTO suscripcionesDTO) {
-        return suscripcionesDAO.save(suscripcionesDTO);
+    public Suscripciones save(Suscripciones suscripciones) {
+        return suscripcionesDAO.save(suscripciones);
     }
 
-    public SuscripcionesDTO deleteSuscripcionesById(Integer suscripcionId) {
+    public Suscripciones deleteSuscripcionesById(Integer suscripcionId) {
         if (suscripcionesDAO.findById(suscripcionId).isPresent()) {
-            SuscripcionesDTO suscripcionesDTO = suscripcionesDAO.findById(suscripcionId).get();
+            Suscripciones suscripciones = suscripcionesDAO.findById(suscripcionId).get();
             suscripcionesDAO.deleteById(suscripcionId);
-            return suscripcionesDTO;
+            return suscripciones;
         } else {
             throw new RuntimeException("Suscripcion no encontrada");
         }
     }
 
-    public SuscripcionesDTO deleteSuscripcionesByEmail(String correo) {
+    public Suscripciones deleteSuscripcionesByEmail(String correo) {
         try {
             suscripcionesDAO.deleteByCorreo(correo);
-            return new SuscripcionesDTO();
+            return new Suscripciones();
         } catch (Exception e) {
             throw new RuntimeException("Error al eliminar la suscripción");
         }

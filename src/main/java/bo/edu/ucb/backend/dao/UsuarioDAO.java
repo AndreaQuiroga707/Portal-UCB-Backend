@@ -1,13 +1,13 @@
 package bo.edu.ucb.backend.dao;
 
-import bo.edu.ucb.backend.dto.UsuarioDTO;
+import bo.edu.ucb.backend.entity.Usuarios;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UsuarioDAO extends JpaRepository<UsuarioDTO, Integer> {
+public interface UsuarioDAO extends JpaRepository<Usuarios, Integer> {
 
-    UsuarioDTO findByCorreoElectronico(String email);
+    Usuarios findByCorreoElectronico(String email);
     boolean existsByCorreoElectronico(String correoElectronico);
-    UsuarioDTO findByUsuarioId(Integer usuarioId);
-    UsuarioDTO findByResetToken(String resetToken);
+    Usuarios findByUsuarioId(Integer usuarioId);
+    Usuarios findByResetToken(String resetToken);
 
 }

@@ -1,7 +1,7 @@
 package bo.edu.ucb.backend.bl;
 
 import bo.edu.ucb.backend.dao.CarrerasDAO;
-import bo.edu.ucb.backend.dto.CarrerasDTO;
+import bo.edu.ucb.backend.entity.Carreras;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -13,26 +13,26 @@ public class CarrerasBL {
     @Autowired
     private CarrerasDAO carrerasDAO;
 
-    public CarrerasDTO findCarreraByNombre(String nombre) {
+    public Carreras findCarreraByNombre(String nombre) {
         return carrerasDAO.findByNombre(nombre);
     }
 
-    public List<CarrerasDTO> findCarrerasByFacultadId(Integer facultadId) {
+    public List<Carreras> findCarrerasByFacultadId(Integer facultadId) {
         return carrerasDAO.findByFacultadFacultadId(facultadId);
     }
 
-    public CarrerasDTO save(CarrerasDTO carrerasDTO, BindingResult result) {
+    public Carreras save(Carreras carreras, BindingResult result) {
         if (result.hasErrors()) {
             throw new RuntimeException(result.getFieldErrors().get(0).getDefaultMessage());
         }
-        return carrerasDAO.save(carrerasDTO);
+        return carrerasDAO.save(carreras);
     }
 
-    public CarrerasDTO findCarrerasById(Integer carreraId) {
+    public Carreras findCarrerasById(Integer carreraId) {
         return carrerasDAO.findById(carreraId).orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
     }
 
-    public List<CarrerasDTO> findAllCarreras() {
+    public List<Carreras> findAllCarreras() {
         try {
             return carrerasDAO.findAll();
         } catch (Exception e) {
@@ -40,17 +40,17 @@ public class CarrerasBL {
         }
     }
 
-    public CarrerasDTO deleteCarrerasById(Integer carreraId) {
-        CarrerasDTO carrerasDTO = findCarrerasById(carreraId);
-        if (carrerasDTO != null) {
+    public Carreras deleteCarrerasById(Integer carreraId) {
+        Carreras carreras = findCarrerasById(carreraId);
+        if (carreras != null) {
             carrerasDAO.deleteById(carreraId);
         }
-        return carrerasDTO;
+        return carreras;
     }
 
-    public CarrerasDTO updateCarreras(CarrerasDTO carrerasDTO, BindingResult result) {
+    public Carreras updateCarreras(Carreras carreras, BindingResult result) {
         if (result.hasErrors()) {
             throw new RuntimeException(result.getFieldErrors().get(0).getDefaultMessage());
         }
-        return carrerasDAO.save(carrerasDTO);}
+        return carrerasDAO.save(carreras);}
 }

@@ -1,5 +1,7 @@
 package bo.edu.ucb.backend.dto;
 
+import bo.edu.ucb.backend.entity.Carreras;
+import bo.edu.ucb.backend.entity.Contactos;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -20,15 +22,15 @@ public class InstitutosInvestigacionDTO {
     private String descripcion;
     @ManyToOne
     @JoinColumn(name = "carrera_id")
-    private CarrerasDTO carrera;
+    private Carreras carrera;
     @ManyToOne
     @JoinColumn(name = "contacto_id")
-    private ContactosDTO contacto;
+    private Contactos contacto;
 
     public InstitutosInvestigacionDTO() {
     }
 
-    public InstitutosInvestigacionDTO(Integer institutoId, String nombre, String enlaceWeb, String lineasInvestigacion, String descripcion, CarrerasDTO carrera, ContactosDTO contacto) {
+    public InstitutosInvestigacionDTO(Integer institutoId, String nombre, String enlaceWeb, String lineasInvestigacion, String descripcion, Carreras carrera, Contactos contacto) {
         this.institutoId = institutoId;
         this.nombre = nombre;
         this.enlaceWeb = enlaceWeb;
@@ -86,19 +88,19 @@ public class InstitutosInvestigacionDTO {
         this.descripcion = descripcion;
     }
 
-    public CarrerasDTO getCarrera() {
+    public Carreras getCarrera() {
         return carrera;
     }
 
-    public void setCarrera(CarrerasDTO carrera) {
+    public void setCarrera(Carreras carrera) {
         this.carrera = carrera;
     }
 
-    public ContactosDTO getContacto() {
+    public Contactos getContacto() {
         return contacto;
     }
 
-    public void setContacto(ContactosDTO contacto) {
+    public void setContacto(Contactos contacto) {
         this.contacto = contacto;
     }
 

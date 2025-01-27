@@ -1,4 +1,4 @@
-package bo.edu.ucb.backend.dto;
+package bo.edu.ucb.backend.entity;
 
 
 import jakarta.persistence.*;
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "eventos")
-public class EventosDTO {
+public class Eventos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer eventoId;
@@ -23,10 +23,10 @@ public class EventosDTO {
     @NotBlank(message = "La descripcion es obligatoria")
     private String descripcion;
 
-    public EventosDTO() {
+    public Eventos() {
     }
 
-    public EventosDTO(Integer eventoId, String enlaceImagen, String nombre, LocalDate fechaInicio, LocalDate fechaFin, String descripcion) {
+    public Eventos(Integer eventoId, String enlaceImagen, String nombre, LocalDate fechaInicio, LocalDate fechaFin, String descripcion) {
         this.eventoId = eventoId;
         this.enlaceImagen = enlaceImagen;
         this.nombre = nombre;

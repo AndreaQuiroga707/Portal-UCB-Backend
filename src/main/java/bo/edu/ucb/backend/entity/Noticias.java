@@ -21,7 +21,7 @@ public class Noticias {
     @NotBlank(message = "El contenido es obligatorio")
     private String contenido;
     @NotNull(message = "La fecha de publicacion es obligatoria")
-    private LocalDate fechaPublicacion;
+    private LocalDate fechaPublicacion = LocalDate.now();
 
     public Noticias() {
     }

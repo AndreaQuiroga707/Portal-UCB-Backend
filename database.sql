@@ -249,4 +249,22 @@ ALTER TABLE usuarios ADD COLUMN is_locked BOOLEAN DEFAULT FALSE; -- Indica si la
 ALTER TABLE usuarios ADD COLUMN lock_time TIMESTAMP NULL; -- Almacena el tiempo de bloqueo
 ALTER TABLE usuarios ADD COLUMN last_password_update TIMESTAMP NULL; -- Última actualización de contraseña
 
-ALTER TABLE usuarios ADD COLUMN rol_id INT DEFAULT NULL;
+ALTER TABLE usuarios ADD COLUMN rol_id INT DEFAULT NULL; --incorrecto
+
+
+CREATE TABLE roles (
+                       rol_id INT AUTO_INCREMENT PRIMARY KEY,
+                       nombre VARCHAR(50) UNIQUE NOT NULL,
+                       descripcion TEXT
+);
+
+
+ALTER TABLE usuarios
+    ADD COLUMN rol_id INT; --correcto
+
+
+UPDATE usuarios
+SET rol_id = (SELECT rol_id FROM roles WHERE nombre = 'USER');
+
+ALTER TABLE usuarios
+    ADD CONSTRAINT fk_rol FOREIGN KEY (rol_id) REFERENCES roles(rol_id);

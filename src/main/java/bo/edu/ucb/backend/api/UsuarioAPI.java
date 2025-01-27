@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -63,25 +64,6 @@ public class UsuarioAPI {
         }
     }
 
-    @PostMapping("/")
-    public ResponseEntity<ResponseDTO> createUsuario(@Valid @RequestBody Usuarios usuarios, BindingResult result) {
-        try {
-            LOG.info("Creando usuario"); // Log para crear un usuario
-            ResponseDTO response = new ResponseDTO();
-            response.setStatus(200);
-            response.setMessage("Usuario creado");
-            response.setData(usuarioBL.save(usuarios, result));
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            LOG.error("Error al crear el usuario", e); // Log en caso de error
-            ResponseDTO response = new ResponseDTO();
-            response.setStatus(400);
-            response.setMessage("Error al crear el usuario");
-            response.setError(e.getMessage());
-            return ResponseEntity.badRequest().body(response);
-        }
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseDTO> deleteUsuarioById(@PathVariable Integer id ) {
         try {
@@ -120,7 +102,7 @@ public class UsuarioAPI {
         }
     }
 
-
+    // Crear usuarios
     @PostMapping("/nuevo")
     public ResponseEntity<UsuarioResponseDto> registrarUsuario(@RequestBody UsuarioRequestDto request) {
         UsuarioResponseDto response = usuarioBL.registrarUsuario(request);
@@ -131,7 +113,7 @@ public class UsuarioAPI {
         }
     }
 
-
+    // login
     @PostMapping("/auth")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto request) {
         try {
@@ -168,6 +150,7 @@ public class UsuarioAPI {
             }
         }
     }
+
 
     @PostMapping("/new/token")
     public ResponseEntity<ResponseDTO> generateResetToken(@RequestBody RequestResetTokenDto email) {
@@ -206,9 +189,5 @@ public class UsuarioAPI {
             return ResponseEntity.badRequest().body(response);
         }
     }
-
-
-
-
 
 }

@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Data
 @Entity
@@ -30,6 +31,24 @@ public class UsuarioDTO {
 
     @Column(name = "password")
     private String password; // Almacena la contraseña encriptada
+
+    @Column(name = "failed_attempts")
+    private Integer failedAttempts = 0;
+
+    @Column(name = "is_locked")
+    private Boolean isLocked = false;
+
+    @Column(name="lock_time")
+    private Timestamp lockTime = null;
+
+    @Column(name = "last_password_update")
+    private Date lastPasswordUpdate = new Timestamp(System.currentTimeMillis());
+
+    @Column(name = "reset_token")
+    private String resetToken = null;
+
+    @Column(name = "reset_token_expiration")
+    private Timestamp resetTokenExpiration = null;
 
 
 

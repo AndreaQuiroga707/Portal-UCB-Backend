@@ -1,5 +1,7 @@
 package bo.edu.ucb.backend.bl;
 
+import bo.edu.ucb.backend.dao.PasswordHistoryDAO;
+import bo.edu.ucb.backend.dto.PasswordHistoryDTO;
 import bo.edu.ucb.backend.dto.UsuarioRequestDto;
 import bo.edu.ucb.backend.dto.UsuarioResponseDto;
 import bo.edu.ucb.backend.security.SHA256PasswordEncoder;
@@ -8,18 +10,22 @@ import org.springframework.stereotype.Service;
 import bo.edu.ucb.backend.dao.UsuarioDAO;
 import bo.edu.ucb.backend.dto.UsuarioDTO;
 import org.springframework.validation.BindingResult;
-import bo.edu.ucb.backend.security.JwtTokenProvider;
+
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 @Service
 public class UsuarioBL {
+
+    @Autowired
+    private PasswordHistoryDAO passwordHistoryDAO;
+
     @Autowired
     private UsuarioDAO usuarioDAO;
-    private final JwtTokenProvider jwtTokenProvider;
-    private final SHA256PasswordEncoder passwordEncoder = new SHA256PasswordEncoder();
 
-    public UsuarioBL(UsuarioDAO usuarioDAO, JwtTokenProvider jwtTokenProvider) {
-        this.usuarioDAO = usuarioDAO;
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
+    private final SHA256PasswordEncoder passwordEncoder = new SHA256PasswordEncoder();
 
     public UsuarioDTO save(UsuarioDTO usuarioDTO, BindingResult result) {
         if (result.hasErrors()) {
@@ -29,44 +35,12 @@ public class UsuarioBL {
         return usuarioDAO.save(usuarioDTO);
     }
 
-
-    // Servicio para registrar usuarios con reglas de contraseña
-    public UsuarioResponseDto registrarUsuario(UsuarioRequestDto request) {
-        // Verificar si ya existe el correo
-        if (usuarioDAO.existsByCorreoElectronico(request.getCorreoElectronico())) {
-            return new UsuarioResponseDto("El correo electrónico ya está registrado.", null, null, null, request.getCorreoElectronico());
+    public void deleteUsuarioById(Integer usuarioId) {
+        if (usuarioDAO.findById(usuarioId).isPresent()) {
+            usuarioDAO.deleteById(usuarioId);
+        } else {
+            throw new RuntimeException("Usuario no encontrado");
         }
-
-        // Validar la contraseña según las reglas
-        if (!esContrasenaValida(request.getPassword())) {
-            return new UsuarioResponseDto("La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un símbolo.", null, null, null, null);
-        }
-
-        // Crear el nuevo usuario
-        UsuarioDTO usuario = new UsuarioDTO();
-        usuario.setNombre(request.getNombre());
-        usuario.setApellido(request.getApellido());
-        usuario.setCorreoElectronico(request.getCorreoElectronico());
-        usuario.setPassword(passwordEncoder.hash(request.getPassword()));
-
-        usuarioDAO.save(usuario);
-
-        String token;
-        try {
-            // Generar token
-            token = jwtTokenProvider.generateToken(usuario.getCorreoElectronico());
-        } catch (Exception e) {
-            throw new RuntimeException("Error al generar el token");
-        }
-
-        // Retornar el DTO con más detalles
-        return new UsuarioResponseDto("Usuario registrado con éxito.", token, usuario.getNombre(), usuario.getApellido(), usuario.getCorreoElectronico());
-    }
-
-    // Método para validar las contraseñas
-    private boolean esContrasenaValida(String password) {
-        String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
-        return password.matches(regex);
     }
 
     public UsuarioDTO findUsuarioById(Integer usuarioId) {
@@ -81,14 +55,6 @@ public class UsuarioBL {
         }
     }
 
-    public void deleteUsuarioById(Integer usuarioId) {
-        if (usuarioDAO.findById(usuarioId).isPresent()) {
-            usuarioDAO.deleteById(usuarioId);
-        } else {
-            throw new RuntimeException("Usuario no encontrado");
-        }
-    }
-
     public UsuarioDTO updateUsuario(UsuarioDTO usuarioDTO, BindingResult result) {
         if (result.hasErrors()) {
             String errorMessage = result.getFieldErrors().get(0).getDefaultMessage();
@@ -100,4 +66,85 @@ public class UsuarioBL {
             throw new RuntimeException("Usuario no encontrado");
         }
     }
+
+    public UsuarioResponseDto registrarUsuario(UsuarioRequestDto request) {
+        if (usuarioDAO.existsByCorreoElectronico(request.getCorreoElectronico())) {
+            return new UsuarioResponseDto("El correo electrónico ya está registrado.", null, null, null, request.getCorreoElectronico());
+        }
+
+        if (!esContrasenaValida(request.getPassword())) {
+            return new UsuarioResponseDto("La contraseña no cumple con las reglas de seguridad.", null, null, null, null);
+        }
+
+        // Crear el nuevo usuario
+        UsuarioDTO usuario = new UsuarioDTO();
+        usuario.setNombre(request.getNombre());
+        usuario.setApellido(request.getApellido());
+        usuario.setCorreoElectronico(request.getCorreoElectronico());
+
+        // Hashear la contraseña y asignarla al usuario
+        String hashedPassword = passwordEncoder.hash(request.getPassword());
+        usuario.setPassword(hashedPassword);
+        usuario.setLastPasswordUpdate(new Date());
+
+        // Guardar el usuario en la base de datos
+        usuarioDAO.save(usuario);
+
+        // Guardar la contraseña inicial en el historial
+        savePasswordHistory(usuario.getUsuarioId(), hashedPassword);
+
+        return new UsuarioResponseDto("Usuario registrado con éxito.", null, usuario.getNombre(), usuario.getApellido(), usuario.getCorreoElectronico());
+    }
+
+//    public String changePassword(int userId, String newPassword) {
+//        UsuarioDTO user = usuarioDAO.findById(userId).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+//
+//        if (isPasswordExpired(user.getLastPasswordUpdate())) {
+//            throw new RuntimeException("La contraseña ha expirado. Debe cambiarla.");
+//        }
+//
+//        if (isPasswordInHistory(userId, newPassword)) {
+//            throw new RuntimeException("No puede reutilizar una contraseña anterior.");
+//        }
+//
+//        String hashedPassword = passwordEncoder.hash(newPassword);
+//        user.setPassword(hashedPassword);
+//        user.setLastPasswordUpdate(new Date());
+//        usuarioDAO.save(user);
+//        savePasswordHistory(userId, hashedPassword);
+//
+//        return "Contraseña actualizada con éxito.";
+//    }
+
+    private boolean esContrasenaValida(String password) {
+        String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+        return password.matches(regex);
+    }
+
+//    public boolean isPasswordExpired(Date lastPasswordUpdate) {
+//        long maxDuration = TimeUnit.DAYS.toMillis(90);
+//        return System.currentTimeMillis() - lastPasswordUpdate.getTime() > maxDuration;
+//    }
+//
+//    public boolean isPasswordInHistory(int userId, String newPassword) {
+//        List<String> oldPasswords = passwordHistoryDAO.findLast6PasswordsByUserId(userId);
+//        String hashedNewPassword = passwordEncoder.hash(newPassword);
+//        return oldPasswords.contains(hashedNewPassword);
+//    }
+
+    private void savePasswordHistory(int userId, String hashedPassword) {
+        PasswordHistoryDTO history = new PasswordHistoryDTO();
+
+        // Buscar el usuario por ID
+        UsuarioDTO user = usuarioDAO.findById(userId).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Configurar los valores del historial
+        history.setUserId(user); // Usa "user_id"
+        history.setHashedPassword(hashedPassword);
+        history.setCreatedAt(new Timestamp(new Date().getTime()));
+
+        // Guardar en la base de datos
+        passwordHistoryDAO.save(history);
+    }
+
 }

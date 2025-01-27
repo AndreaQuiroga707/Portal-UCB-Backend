@@ -136,31 +136,78 @@ public class UsuarioAPI {
         try {
             LOG.info("Autenticando usuario");
 
-            // Verificar si el correo electrónico es válido
+            // Validar entrada
             if (request.getCorreoElectronico() == null || request.getCorreoElectronico().isEmpty()) {
                 return ResponseEntity.badRequest().body(new LoginResponseDto("Correo electrónico no proporcionado"));
             }
 
-            // Verificar si la contraseña es válida
             if (request.getPassword() == null || request.getPassword().isEmpty()) {
                 return ResponseEntity.badRequest().body(new LoginResponseDto("Contraseña no proporcionada"));
             }
 
             // Intentar autenticar al usuario
             LoginResponseDto response = authBl.authenticate(request);
-            if (response == null) {
-                LOG.error("Usuario no encontrado o contraseña incorrecta");
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponseDto("Credenciales incorrectas"));
-            }
-
             LOG.info("Usuario autenticado con éxito");
             return ResponseEntity.ok(response);
 
-        } catch (Exception e) {
-            LOG.error("Error al autenticar el usuario", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new LoginResponseDto("Error interno al autenticar el usuario"));
+        } catch (RuntimeException e) {
+            LOG.error("Error durante la autenticación: {}", e.getMessage());
+            if (e.getMessage().equals("Usuario no encontrado")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new LoginResponseDto("Usuario no encontrado"));
+            } else if (e.getMessage().equals("Contraseña incorrecta")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new LoginResponseDto("Contraseña incorrecta"));
+            } else if (e.getMessage().equals("La cuenta está bloqueada. Intente nuevamente más tarde.")) {
+                return ResponseEntity.status(HttpStatus.LOCKED)
+                        .body(new LoginResponseDto("La cuenta está bloqueada. Intente nuevamente más tarde."));
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(new LoginResponseDto("Error interno al autenticar el usuario"));
+            }
         }
     }
+
+    @PostMapping("/new/token")
+    public ResponseEntity<ResponseDTO> generateResetToken(@RequestBody RequestResetTokenDto email) {
+        try {
+            LOG.info("Generando token de restablecimiento para: {}", email.getEmail());
+            authBl.generateResetToken(email.getEmail());
+
+            ResponseDTO response = new ResponseDTO();
+            response.setStatus(200);
+            response.setMessage("Token de restablecimiento generado y enviado al correo.");
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            LOG.error("Error al generar token de restablecimiento: {}", e.getMessage());
+            ResponseDTO response = new ResponseDTO();
+            response.setStatus(400);
+            response.setMessage(e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+    @PostMapping("/new/token/password")
+    public ResponseEntity<ResponseDTO> resetPassword(@RequestBody ResetPasswordRequestDto request) {
+        try {
+            LOG.info("Procesando solicitud de restablecimiento de contraseña");
+            authBl.resetPasswordWithToken(request.getToken(), request.getNewPassword());
+
+            ResponseDTO response = new ResponseDTO();
+            response.setStatus(200);
+            response.setMessage("Contraseña restablecida con éxito.");
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            LOG.error("Error al restablecer la contraseña: {}", e.getMessage());
+            ResponseDTO response = new ResponseDTO();
+            response.setStatus(400);
+            response.setMessage(e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+
+
+
 
 }

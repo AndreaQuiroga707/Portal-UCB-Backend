@@ -79,6 +79,7 @@ public class CarrerasAPI {
             response.setStatus(200);
             response.setMessage("Carrera encontrada");
             response.setData(carrerasBL.findCarrerasById(id));
+            appLogger.info("Se encontró la carrera con ID: {}", id);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al encontrar la carrera", e);

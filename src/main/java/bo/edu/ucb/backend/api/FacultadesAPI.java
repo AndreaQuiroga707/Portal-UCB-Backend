@@ -71,6 +71,7 @@ public class FacultadesAPI {
             response.setStatus(200);
             response.setMessage("Lista de facultades");
             response.setData(facultadesBL.findAllFacultades());
+            appLogger.info("Se listaron las facultades");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al listar facultades", e); // Log en caso de error
@@ -100,6 +101,8 @@ public class FacultadesAPI {
             response.setStatus(400);
             response.setMessage("Error al actualizar la facultad");
             response.setError(e.getMessage());
+            appLogger.error("Error al actualizar la facultad con ID: {}, Nombre: '{}'.",
+                    facultadesDTO.getFacultadId(), facultadesDTO.getNombre());
             return ResponseEntity.badRequest().body(response);
         }
     }

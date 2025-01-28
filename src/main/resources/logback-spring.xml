@@ -11,24 +11,11 @@
         </encoder>
     </appender>
 
-    <!-- Appender para logs de login -->
-    <appender name="LOGIN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/login.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>logs/login.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-            <maxFileSize>10MB</maxFileSize>
-            <maxHistory>5</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
-
     <!-- Appender para logs generales de la aplicación -->
     <appender name="APP_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/application.log</file>
+        <file>application.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>logs/application.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>application.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <maxFileSize>10MB</maxFileSize>
             <maxHistory>5</maxHistory>
         </rollingPolicy>
@@ -36,23 +23,22 @@
             <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
-
-    <!-- Logger para eventos de login -->
-    <logger name="LOGIN_LOGGER" level="${LOG_LEVEL}" additivity="false">
-        <appender-ref ref="LOGIN_FILE"/>
-    </logger>
 
     <!-- Logger para eventos específicos de la aplicación -->
     <logger name="APP_LOGGER" level="${LOG_LEVEL}" additivity="false">
         <appender-ref ref="APP_FILE"/>
-    </logger>
-
-    <!-- Logger para eventos de Spring (opcional para personalización) -->
-    <logger name="org.springframework" level="INFO" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
 
-    <!-- Root logger -->
+    <!-- Logger para eventos de Spring y otros frameworks -->
+    <logger name="org.springframework" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+    <logger name="org.hibernate" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <!-- Root logger (solo para consola, no incluye APP_FILE) -->
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class UsuarioAPI {
     private static final Logger LOG = LoggerFactory.getLogger(UsuarioAPI.class); // Agregar el Logger
     private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
+    private static final Logger loginLogger = LoggerFactory.getLogger("LOGIN_LOGGER");
     @Autowired
     UsuarioBL usuarioBL;
     @Autowired
@@ -34,6 +35,7 @@ public class UsuarioAPI {
             response.setStatus(200);
             response.setMessage("Lista de usuarios");
             response.setData(usuarioBL.findAllUsuarios());
+
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al listar usuarios", e); // Log en caso de error
@@ -53,6 +55,7 @@ public class UsuarioAPI {
             response.setStatus(200);
             response.setMessage("Usuario encontrado");
             response.setData(usuarioBL.findUsuarioById(id));
+            loginLogger.info("Usuario encontrado por ID: {}", id);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al encontrar el usuario por ID: {}", id, e); // Log en caso de error
@@ -135,6 +138,7 @@ public class UsuarioAPI {
             return ResponseEntity.ok(response);
 
         } catch (RuntimeException e) {
+            appLogger.error("Error durante la autenticación: {}", e.getMessage());
             LOG.error("Error durante la autenticación: {}", e.getMessage());
             if (e.getMessage().equals("Usuario no encontrado")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)

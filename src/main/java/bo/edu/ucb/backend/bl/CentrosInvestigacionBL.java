@@ -15,7 +15,7 @@ import java.util.Optional;
 public class CentrosInvestigacionBL {
     @Autowired
     private CentrosInvestigacionDAO centrosInvestigacionDAO;
-    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
+
 
     public List<CentrosInvestigacionDTO> findAllInstitutosInvestigacion() {
         try {
@@ -42,8 +42,7 @@ public class CentrosInvestigacionBL {
         if (result.hasErrors()) {
             throw new RuntimeException(result.getFieldErrors().get(0).getDefaultMessage());
         }
-        appLogger.info("Guardando instituto de investigación con ID: {}, Nombre: '{}', Enlace web: '{}'.",
-                centrosInvestigacionDTO.getIdCentroInvestigacion(), centrosInvestigacionDTO.getNombre(), centrosInvestigacionDTO.getEnlaceWeb());
+
         return centrosInvestigacionDAO.save(centrosInvestigacionDTO);
     }
 

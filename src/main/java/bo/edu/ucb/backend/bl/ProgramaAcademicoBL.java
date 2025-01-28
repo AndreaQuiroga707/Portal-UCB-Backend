@@ -12,7 +12,6 @@ import org.springframework.validation.BindingResult;
 public class ProgramaAcademicoBL {
     @Autowired
     private ProgramaAcademicoDAO programaAcademicoDAO;
-    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
 
     public ProgramaAcademicoDTO save(ProgramaAcademicoDTO programaAcademicoDTO, BindingResult result) {
         if (result.hasErrors()) {
@@ -37,7 +36,6 @@ public class ProgramaAcademicoBL {
     public void deleteProgramaAcademicoById(Integer programaId) {
         if (programaAcademicoDAO.findById(programaId).isPresent()) {
             programaAcademicoDAO.deleteById(programaId);
-            appLogger.info("Se eliminó exitosamente el programa académico con ID: {}.", programaId);
         } else {
             throw new RuntimeException("Programa académico no encontrado");
         }
@@ -46,11 +44,9 @@ public class ProgramaAcademicoBL {
     public ProgramaAcademicoDTO updateProgramaAcademico(ProgramaAcademicoDTO programaAcademicoDTO, BindingResult result){
         if (result.hasErrors()) {
             String errorMessage = result.getFieldErrors().get(0).getDefaultMessage();
-            appLogger.info("Error al actualizar el programa académico: {}", errorMessage);
             throw new RuntimeException(errorMessage);
         }
         if (programaAcademicoDAO.findById(programaAcademicoDTO.getProgramaId()).isPresent()) {
-            appLogger.info("Actualizando programa académico: {}", programaAcademicoDTO.toString());
             return programaAcademicoDAO.save(programaAcademicoDTO);
         } else {
             throw new RuntimeException("Programa académico no encontrado");

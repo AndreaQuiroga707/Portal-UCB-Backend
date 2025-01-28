@@ -24,7 +24,6 @@ public class CursoBL {
             String errorMessage = result.getFieldErrors().get(0).getDefaultMessage();
             throw new RuntimeException(errorMessage);
         }
-        appLogger.info("Guardando nuevo curso: {}", cursos.toString());
         return cursoDAO.save(cursos);
     }
 

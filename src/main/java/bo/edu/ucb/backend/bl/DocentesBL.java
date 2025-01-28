@@ -21,7 +21,6 @@ public class DocentesBL {
             throw new RuntimeException(errorMessage);
         }
         try {
-            appLogger.info("Guardando nuevo docente: {}", docentesDTO.toString());
             return docentesDAO.save(docentesDTO);
         } catch (Exception e) {
             throw new RuntimeException("Error al registrar al docente");
@@ -51,7 +50,6 @@ public class DocentesBL {
         docenteEncontrado.setTrayectoria(docentesDTO.getTrayectoria());
         docenteEncontrado.setFoto(docentesDTO.getFoto());
         try {
-            appLogger.info("Actualizando docente: {}", docenteEncontrado.toString());
             return docentesDAO.save(docenteEncontrado);
         } catch (Exception e) {
             throw new RuntimeException("Error al actualizar al docente");

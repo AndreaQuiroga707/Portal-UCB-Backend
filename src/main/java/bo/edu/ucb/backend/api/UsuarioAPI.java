@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/usuario")
 public class UsuarioAPI {
     private static final Logger LOG = LoggerFactory.getLogger(UsuarioAPI.class); // Agregar el Logger
-    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     private static final Logger loginLogger = LoggerFactory.getLogger("LOGIN_LOGGER");
     @Autowired
     UsuarioBL usuarioBL;
@@ -55,7 +54,6 @@ public class UsuarioAPI {
             response.setStatus(200);
             response.setMessage("Usuario encontrado");
             response.setData(usuarioBL.findUsuarioById(id));
-            loginLogger.info("Usuario encontrado por ID: {}", id);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al encontrar el usuario por ID: {}", id, e); // Log en caso de error
@@ -75,6 +73,7 @@ public class UsuarioAPI {
             response.setStatus(200);
             response.setMessage("Usuario eliminado");
             usuarioBL.deleteUsuarioById(id);
+            loginLogger.info("Usuario eliminado por ID: {}", id);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al eliminar el usuario por ID: {}", id, e); // Log en caso de error
@@ -82,6 +81,7 @@ public class UsuarioAPI {
             response.setStatus(400);
             response.setMessage("Error al eliminar el usuario");
             response.setError(e.getMessage());
+            loginLogger.error("Error al eliminar el usuario por ID: {}", id);
             return ResponseEntity.badRequest().body(response);
         }
     }
@@ -94,6 +94,8 @@ public class UsuarioAPI {
             response.setStatus(200);
             response.setMessage("Usuario actualizado");
             response.setData(usuarioBL.updateUsuario(usuarios, result));
+            loginLogger.info("Usuario actualizado con ID: {}, Nombre: '{}'.",
+                    usuarios.getUsuarioId(), usuarios.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al actualizar el usuario", e); // Log en caso de error
@@ -134,22 +136,25 @@ public class UsuarioAPI {
             // Intentar autenticar al usuario
             LoginResponseDto response = authBl.authenticate(request);
             LOG.info("Usuario autenticado con éxito");
-            appLogger.info("Usuario autenticado con éxito: {}", request.getCorreoElectronico());
+            loginLogger.info("Usuario autenticado con éxito: {}", request.getCorreoElectronico());
             return ResponseEntity.ok(response);
 
         } catch (RuntimeException e) {
-            appLogger.error("Error durante la autenticación: {}", e.getMessage());
+            loginLogger.error("Error durante la autenticación: {}", e.getMessage());
             LOG.error("Error durante la autenticación: {}", e.getMessage());
             if (e.getMessage().equals("Usuario no encontrado")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(new LoginResponseDto("Usuario no encontrado"));
             } else if (e.getMessage().equals("Contraseña incorrecta")) {
+                loginLogger.error("Contraseña incorrecta para: {}", request.getCorreoElectronico());
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body(new LoginResponseDto("Contraseña incorrecta"));
             } else if (e.getMessage().equals("La cuenta está bloqueada. Intente nuevamente más tarde.")) {
+                loginLogger.error("La cuenta está bloqueada para: {}", request.getCorreoElectronico());
                 return ResponseEntity.status(HttpStatus.LOCKED)
                         .body(new LoginResponseDto("La cuenta está bloqueada. Intente nuevamente más tarde."));
             } else {
+                loginLogger.error("Error interno al autenticar el usuario: {}", e.getMessage());
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(new LoginResponseDto("Error interno al autenticar el usuario"));
             }
@@ -181,17 +186,17 @@ public class UsuarioAPI {
         try {
             LOG.info("Procesando solicitud de restablecimiento de contraseña");
             authBl.resetPasswordWithToken(request.getToken(), request.getNewPassword());
-
             ResponseDTO response = new ResponseDTO();
             response.setStatus(200);
             response.setMessage("Contraseña restablecida con éxito.");
-            appLogger.info("Contraseña restablecida con éxito para: {}", request.toString());
+            loginLogger.info("Contraseña restablecida con éxito para: {}", request.toString());
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             LOG.error("Error al restablecer la contraseña: {}", e.getMessage());
             ResponseDTO response = new ResponseDTO();
             response.setStatus(400);
             response.setMessage(e.getMessage());
+            loginLogger.error("Error al restablecer la contraseña: {}", e.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
     }

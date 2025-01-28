@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class EmailSenderBL {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailSenderBL.class);
-    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
+
     @Autowired
     private JavaMailSender mailSender;
 
@@ -34,8 +34,6 @@ public class EmailSenderBL {
             message.setText(body);
 
             mailSender.send(message);
-
-            appLogger.info("Correo enviado correctamente a {}", toEmail);
         } catch (Exception e) {
             LOGGER.error("Error al enviar correo: {}", e.getMessage());
             throw new RuntimeException("Error al enviar correo: " + e.getMessage());
@@ -46,7 +44,6 @@ public class EmailSenderBL {
         try {
             List<Suscripciones> correos = suscripcionesBL.findAllSuscripcionesList();
             if (correos.isEmpty()) {
-                appLogger.info("No hay correos para enviar.");
                 return;
             }
 
@@ -58,8 +55,6 @@ public class EmailSenderBL {
                     message.setText(body);
                     message.setSubject(subject);
                     mailSender.send(message);
-
-                    appLogger.info("Correo enviado correctamente a {}", correo.getCorreo());
                 } catch (Exception e) {
                     LOGGER.error("Error al enviar correo a {}: {}", correo.getCorreo(), e.getMessage());
                 }
@@ -83,8 +78,6 @@ public class EmailSenderBL {
             message.setText(body);
 
             mailSender.send(message);
-
-            appLogger.info("Correo de restablecimiento enviado correctamente a {}", to);
         } catch (Exception e) {
             LOGGER.error("Error al enviar correo de restablecimiento a {}: {}", to, e.getMessage());
             throw new RuntimeException("Error al enviar correo de restablecimiento: " + e.getMessage());

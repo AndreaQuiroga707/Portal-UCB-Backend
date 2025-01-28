@@ -16,7 +16,6 @@ import java.util.Optional;
 public class SociedadesCientificasBL {
     @Autowired
     private SociedadesCientificasDAO sociedadesCientificasDAO;
-    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
 
     public List<SociedadesCientificasDTO> findAllSociedadesCientificas() {
         try {
@@ -43,7 +42,6 @@ public class SociedadesCientificasBL {
         if (result.hasErrors()) {
             throw new RuntimeException(result.getFieldErrors().get(0).getDefaultMessage());
         }
-        appLogger.info("Guardando nueva sociedad científica: {}", sociedadesCientificasDTO.toString());
         return sociedadesCientificasDAO.save(sociedadesCientificasDTO);
     }
 
@@ -52,7 +50,6 @@ public class SociedadesCientificasBL {
         if (sociedadesCientificasDTO != null) {
             sociedadesCientificasDAO.deleteById(id);
         }
-        appLogger.info("Sociedad científica con ID: {} eliminada exitosamente.", id);
         return sociedadesCientificasDTO;
     }
 
@@ -60,7 +57,7 @@ public class SociedadesCientificasBL {
         if (result.hasErrors()) {
             throw new RuntimeException(result.getFieldErrors().get(0).getDefaultMessage());
         }
-        appLogger.info("Actualizando sociedad científica con ID: {}.", sociedadesCientificasDTO.getSociedadId());
+
         return sociedadesCientificasDAO.save(sociedadesCientificasDTO);
     }
 }

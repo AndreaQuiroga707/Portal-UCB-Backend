@@ -13,14 +13,13 @@ import org.springframework.validation.BindingResult;
 public class EventosBL {
     @Autowired
     private EventosDAO eventosDAO;
-    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
+
 
     public Eventos save(Eventos eventos, BindingResult result) {
         if (result.hasErrors()) {
             String errorMessage = result.getFieldErrors().get(0).getDefaultMessage();
             throw new RuntimeException(errorMessage);
         }
-        appLogger.info("Guardando nuevo evento: {}", eventos.toString());
         return eventosDAO.save(eventos);
     }
 

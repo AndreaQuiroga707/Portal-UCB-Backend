@@ -27,7 +27,7 @@ public class CarrerasBL {
         if (result.hasErrors()) {
             throw new RuntimeException(result.getFieldErrors().get(0).getDefaultMessage());
         }
-        appLogger.info("Guardando nueva carrera: {}", carreras.toString());
+
         return carrerasDAO.save(carreras);
     }
 

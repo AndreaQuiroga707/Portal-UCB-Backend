@@ -16,7 +16,6 @@ import java.util.Optional;
 public class GruposInvestigacionBL {
     @Autowired
     GruposInvestigacionDAO gruposInvestigacionDAO;
-    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
 
     public List<GruposInvestigacionDTO> findAllGruposInvestigacion() {
         try {
@@ -43,8 +42,6 @@ public class GruposInvestigacionBL {
         if (result.hasErrors()) {
             throw new RuntimeException(result.getFieldErrors().get(0).getDefaultMessage());
         }
-        appLogger.info("Guardando grupo de investigación con ID: {}, Nombre: '{}', Enlace web: '{}', Carrera: '{}'.",
-                gruposInvestigacionDTO.getGrupoInvestigacionId(), gruposInvestigacionDTO.getNombre(), gruposInvestigacionDTO.getEnlaceWeb(), gruposInvestigacionDTO.getCarrera().getNombre());
         return gruposInvestigacionDAO.save(gruposInvestigacionDTO);
     }
 

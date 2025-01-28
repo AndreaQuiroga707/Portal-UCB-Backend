@@ -1,5 +1,7 @@
 package bo.edu.ucb.backend.bl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +13,15 @@ import org.springframework.validation.BindingResult;
 public class NoticiasBL {
     @Autowired
     private NoticiasDAO noticiasDAO;
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
 
     public Noticias save(Noticias noticias, BindingResult result) {
         if (result.hasErrors()) {
             String errorMessage = result.getFieldErrors().get(0).getDefaultMessage();
             throw new RuntimeException(errorMessage);
         }
+        appLogger.info("Guardando noticia con ID: {}, Título: '{}', Fecha de publicación: {}.",
+                noticias.getNoticiaId(), noticias.getTitulo(), noticias.getFechaPublicacion());
         return noticiasDAO.save(noticias);
     }
     public Noticias findNoticiasById(Integer noticiaId) {

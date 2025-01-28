@@ -25,7 +25,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/v1/docentes")
 public class DocentesAPI {
     private static final Logger LOG = LoggerFactory.getLogger(DocentesAPI.class);
-
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     @Autowired
     DocentesBL docentesBL;
 
@@ -77,6 +77,8 @@ public class DocentesAPI {
             response.setStatus(201); // HttpStatus.CREATED
             response.setMessage("Docente creado");
             response.setData(docentesBL.createDocente(docentesDTO, result));
+            appLogger.info("Se creó el Docente con ID: {}, Nombre: '{}'.",
+                    docentesDTO.getDocenteId(), docentesDTO.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al crear el docente", e); // Log en caso de error
@@ -96,6 +98,8 @@ public class DocentesAPI {
             response.setStatus(200);
             response.setMessage("Docente actualizado");
             response.setData(docentesBL.updateDocente(docentesDTO, result));
+            appLogger.info("Se actualizó el Docente con ID: {}, Nombre: '{}'.",
+                    docentesDTO.getDocenteId(), docentesDTO.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al actualizar el docente", e); // Log en caso de error
@@ -117,6 +121,7 @@ public class DocentesAPI {
             response.setStatus(200);
             response.setMessage("Docente eliminado");
             response.setData(docentesBL.deleteDocente(docentesDTO));
+            appLogger.info("Se eliminó el Docente con ID: {}.", id);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al eliminar el docente por ID: {}", id, e); // Log en caso de error

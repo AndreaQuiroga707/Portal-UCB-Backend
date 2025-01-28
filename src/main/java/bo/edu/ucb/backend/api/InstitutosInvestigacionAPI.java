@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/institutos/investigacion")
 public class InstitutosInvestigacionAPI {
     private static final Logger LOG = LoggerFactory.getLogger(InstitutosInvestigacionAPI.class);
-
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     @Autowired
     private InstitutosInvestigacionBL institutosInvestigacionBL;
 
@@ -28,6 +28,7 @@ public class InstitutosInvestigacionAPI {
             response.setStatus(200);
             response.setMessage("Lista de institutos de investigación");
             response.setData(institutosInvestigacionBL.findAllInstitutosInvestigacion());
+
             return ResponseEntity.ok(response);
         } catch (Exception e){
             LOG.error("Error al listar los institutos de investigación");
@@ -64,6 +65,8 @@ public class InstitutosInvestigacionAPI {
             response.setStatus(200);
             response.setMessage("Instituto de investigación guardado");
             response.setData(institutosInvestigacionBL.save(institutosInvestigacionDTO, result));
+            appLogger.info("Se creó el instituto de investigación con ID: {}, Nombre: '{}'.",
+                    institutosInvestigacionDTO.getInstitutoId(), institutosInvestigacionDTO.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e){
             LOG.error("Error al guardar el instituto de investigación {}", e);
@@ -100,6 +103,8 @@ public class InstitutosInvestigacionAPI {
             response.setStatus(200);
             response.setMessage("Instituto de investigación actualizado");
             response.setData(institutosInvestigacionBL.updateInstitutoInvestigacion(institutosInvestigacionDTO, result));
+            appLogger.info("Se actualizó el instituto de investigación con ID: {}, Nombre: '{}'.",
+                    institutosInvestigacionDTO.getInstitutoId(), institutosInvestigacionDTO.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e){
             LOG.error("Error al actualizar el instituto de investigación {}", e);

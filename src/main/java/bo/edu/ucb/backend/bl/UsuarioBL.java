@@ -12,13 +12,17 @@ import org.springframework.stereotype.Service;
 import bo.edu.ucb.backend.dao.UsuarioDAO;
 import bo.edu.ucb.backend.entity.Usuarios;
 import org.springframework.validation.BindingResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.Date;
 
 @Service
 public class UsuarioBL {
-
+    private static final Logger loginLogger = LoggerFactory.getLogger("LOGIN_LOGGER");
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     @Autowired
     private RolesDAO rolesDAO;
     @Autowired
@@ -40,6 +44,7 @@ public class UsuarioBL {
     public void deleteUsuarioById(Integer usuarioId) {
         if (usuarioDAO.findById(usuarioId).isPresent()) {
             usuarioDAO.deleteById(usuarioId);
+            appLogger.info("Se eliminó exitosamente al usuario con ID: {}.", usuarioId);
         } else {
             throw new RuntimeException("Usuario no encontrado");
         }
@@ -63,6 +68,7 @@ public class UsuarioBL {
             throw new RuntimeException(errorMessage);
         }
         if (usuarioDAO.findById(usuarios.getUsuarioId()).isPresent()) {
+            appLogger.info("Usuario con ID: {} actualizado exitosamente.", usuarios.getUsuarioId());
             return usuarioDAO.save(usuarios);
         } else {
             throw new RuntimeException("Usuario no encontrado");
@@ -103,6 +109,8 @@ public class UsuarioBL {
             savePasswordHistory(usuario.getUsuarioId(), usuario.getPassword());
 
             // Retornar respuesta de éxito
+            loginLogger.info("Nuevo usuario registrado: '{} {}', correo: '{}', rol: '{}'.",
+                    usuario.getNombre(), usuario.getApellido(), usuario.getCorreoElectronico(), rol.getNombre());
             return new UsuarioResponseDto("Usuario registrado con éxito.", null, usuario.getNombre(), usuario.getApellido(), usuario.getCorreoElectronico());
 
         } catch (IllegalArgumentException e) {

@@ -1,5 +1,7 @@
 package bo.edu.ucb.backend.bl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,7 @@ import bo.edu.ucb.backend.dto.DocentesDeCarreraDTO;
 public class DocentesDeCarreraBL {
     @Autowired
     private DocentesDeCarreraDAO docentesDeCarreraDAO;
-
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     //no confundan, son solo llaves
     public Iterable<DocentesDeCarreraDTO> findAllDocentesDeCarrera() {
         try {
@@ -26,6 +28,8 @@ public class DocentesDeCarreraBL {
 
     public DocentesDeCarreraDTO createDocenteDeCarrera(DocentesDeCarreraDTO docentesDeCarreraDTO) {
         try {
+            appLogger.info("Guardando docente de carrera con ID: {}, Docente: '{}', Carrera: '{}'.",
+                    docentesDeCarreraDTO.getDocenteDeCarreraId(), docentesDeCarreraDTO.getDocente(), docentesDeCarreraDTO.getCarrera());
             return docentesDeCarreraDAO.save(docentesDeCarreraDTO);
         } catch (Exception e) {
             throw new RuntimeException("Error al registrar al docente de carrera");

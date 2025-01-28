@@ -22,7 +22,7 @@ import bo.edu.ucb.backend.dto.ResponseDTO;
 public class DocentesDeCarreraAPI {
     @Autowired
     private DocentesDeCarreraBL docentesDeCarreraBL;
-
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     private static final Logger LOG = LoggerFactory.getLogger(DocentesDeCarreraAPI.class);
 
     @PostMapping("/")
@@ -33,6 +33,8 @@ public class DocentesDeCarreraAPI {
             response.setStatus(200);
             response.setMessage("Docente de carrera creado correctamente");
             response.setData(docentesDeCarreraBL.createDocenteDeCarrera(docentesDeCarreraDTO));
+            appLogger.info("Se creó el docente de carrera con ID: {}.",
+                    docentesDeCarreraDTO.getDocenteDeCarreraId());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al crear el docente de carrera", e);
@@ -52,6 +54,8 @@ public class DocentesDeCarreraAPI {
             response.setStatus(200);
             response.setMessage("Docente de carrera actualizado correctamente");
             response.setData(docentesDeCarreraBL.updateDocenteDeCarrera(docentesDeCarreraDTO));
+            appLogger.info("Se actualizó el docente de carrera con ID: {}.",
+                    docentesDeCarreraDTO.getDocenteDeCarreraId());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al actualizar el docente de carrera", e);

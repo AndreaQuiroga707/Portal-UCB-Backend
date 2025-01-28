@@ -21,6 +21,7 @@ import bo.edu.ucb.backend.entity.Suscripciones;
 @RequestMapping("/api/v1/suscripciones")
 public class SuscripcionesAPI {
     private static final Logger LOG = LoggerFactory.getLogger(SuscripcionesAPI.class);
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     @Autowired
     private SuscripcionesBL suscripcionesBL;
 
@@ -32,6 +33,7 @@ public class SuscripcionesAPI {
             response.setStatus(200);
             response.setMessage("Suscripción creada");
             response.setData(suscripcionesBL.save(correo));
+            appLogger.info("Se creó la suscripción con correo: '{}'", correo.getCorreo());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al crear la suscripción {}", e);
@@ -50,6 +52,7 @@ public class SuscripcionesAPI {
             response.setStatus(200);
             response.setMessage("Suscripción eliminada");
             response.setData(suscripcionesBL.deleteSuscripcionesByEmail(correo));
+            appLogger.info("Se eliminó la suscripción con correo: '{}'", correo);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al eliminar la suscripción {}", e);

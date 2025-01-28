@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/grupos/investigaciones")
 public class GruposInvestigacionAPI {
     private static final Logger LOG = LoggerFactory.getLogger(GruposInvestigacionAPI.class);
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
 
     @Autowired
     private GruposInvestigacionBL gruposInvestigacionBL;
@@ -64,6 +65,8 @@ public class GruposInvestigacionAPI {
             response.setStatus(200);
             response.setMessage("Grupo de Investigacion creado");
             response.setData(gruposInvestigacionBL.save(gruposInvestigacionDTO, result));
+            appLogger.info("Se creó el Grupo de Investigacion con ID: {}, Nombre: '{}'.",
+                    gruposInvestigacionDTO.getGrupoInvestigacionId(), gruposInvestigacionDTO.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e){
             LOG.error("Error al crear el Grupo de Investigacion");
@@ -100,6 +103,8 @@ public class GruposInvestigacionAPI {
             response.setStatus(200);
             response.setMessage("Grupo de Investigacion actualizado");
             response.setData(gruposInvestigacionBL.updateGruposInvestigacion(gruposInvestigacionDTO, result));
+            appLogger.info("Se actualizó el Grupo de Investigacion con ID: {}, Nombre: '{}'.",
+                    gruposInvestigacionDTO.getGrupoInvestigacionId(), gruposInvestigacionDTO.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e){
             LOG.error("Error al actualizar el Grupo de Investigacion");

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/contactos")
 public class ContactosAPI {
     private static final Logger LOG = LoggerFactory.getLogger(ContactosAPI.class);
-
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     @Autowired
     private ContactosBL contactosBl;
 
@@ -64,6 +64,8 @@ public class ContactosAPI {
             response.setStatus(200);
             response.setMessage("Contacto guardado");
             response.setData(contactosBl.save(contactos, result));
+            appLogger.info("Se guardó el contacto con ID: {}, Nombre: '{}'.",
+                    contactos.getContactoId(), contactos.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e){
             LOG.error("Error al guardar el contacto");
@@ -82,6 +84,7 @@ public class ContactosAPI {
             response.setStatus(200);
             response.setMessage("Contacto eliminado");
             response.setData(contactosBl.deleteContactosById(id));
+            appLogger.info("Se eliminó el contacto con ID: {}", id);
             return ResponseEntity.ok(response);
         } catch (Exception e){
             response.setStatus(400);
@@ -99,6 +102,8 @@ public class ContactosAPI {
             response.setStatus(200);
             response.setMessage("Contacto actualizado");
             response.setData(contactosBl.updateContactos(contactos, result));
+            appLogger.info("Se actualizó el contacto con ID: {}, Nombre: '{}'.",
+                    contactos.getContactoId(), contactos.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e){
             LOG.error("Error al actualizar el contacto");

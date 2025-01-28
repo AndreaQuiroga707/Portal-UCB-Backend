@@ -9,5 +9,4 @@ public interface UsuarioDAO extends JpaRepository<Usuarios, Integer> {
     boolean existsByCorreoElectronico(String correoElectronico);
     Usuarios findByUsuarioId(Integer usuarioId);
     Usuarios findByResetToken(String resetToken);
-
 }

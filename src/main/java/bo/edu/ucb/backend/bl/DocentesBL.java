@@ -1,5 +1,7 @@
 package bo.edu.ucb.backend.bl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +13,15 @@ import org.springframework.validation.BindingResult;
 public class DocentesBL {
     @Autowired
     private DocentesDAO docentesDAO;
-    
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
+
     public DocentesDTO createDocente(DocentesDTO docentesDTO, BindingResult result) {
         if (result.hasErrors()) {
             String errorMessage = result.getFieldErrors().get(0).getDefaultMessage();
             throw new RuntimeException(errorMessage);
         }
         try {
+            appLogger.info("Guardando nuevo docente: {}", docentesDTO.toString());
             return docentesDAO.save(docentesDTO);
         } catch (Exception e) {
             throw new RuntimeException("Error al registrar al docente");
@@ -47,6 +51,7 @@ public class DocentesBL {
         docenteEncontrado.setTrayectoria(docentesDTO.getTrayectoria());
         docenteEncontrado.setFoto(docentesDTO.getFoto());
         try {
+            appLogger.info("Actualizando docente: {}", docenteEncontrado.toString());
             return docentesDAO.save(docenteEncontrado);
         } catch (Exception e) {
             throw new RuntimeException("Error al actualizar al docente");

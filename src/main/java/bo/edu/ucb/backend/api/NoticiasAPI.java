@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 @RequestMapping("/api/v1/noticias")
 public class NoticiasAPI {
     private static final Logger LOG = LoggerFactory.getLogger(NoticiasAPI.class);
-
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     @Autowired
     private NoticiasBL noticiasBl;
     @Autowired
@@ -34,6 +34,7 @@ public class NoticiasAPI {
             response.setStatus(200);
             response.setMessage("Lista de noticias");
             response.setData(noticiasBl.findAllNoticias());
+
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al listar noticias", e); // Log en caso de error
@@ -74,6 +75,8 @@ public class NoticiasAPI {
             response.setData(noticiasBl.save(noticias, result));
 //            EmailDTO emailDTO = new EmailDTO("andrea.quiroga@ucb.edu.bo", noticiasDTO.getTitulo(), noticiasDTO.getContenido());
             emailSenderBL.sendEmailSuscripcion(noticias.getTitulo(), noticias.getContenido());
+            appLogger.info("Se creó la Noticia con ID: {}, Titulo: '{}'.",
+                    noticias.getNoticiaId(), noticias.getTitulo());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al crear la noticia", e); // Log en caso de error

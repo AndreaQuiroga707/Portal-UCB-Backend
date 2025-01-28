@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class FileController {
-
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     private static final Logger LOGGER = LoggerFactory.getLogger(FileController.class);
 
     @Value("${minio.url}")
@@ -78,6 +78,7 @@ public class FileController {
             response.setStatus(200);
             response.setMessage("Archivo subido exitosamente");
             response.setData(presignedUrl);
+            appLogger.info("Archivo subido exitosamente: {}", file.getOriginalFilename());
             return ResponseEntity.ok(response);
         } catch (MinioException | IOException | NoSuchAlgorithmException | InvalidKeyException e) {
             e.printStackTrace();

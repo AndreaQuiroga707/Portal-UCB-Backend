@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/eventos")
 public class EventosAPI {
     private static final Logger LOG = LoggerFactory.getLogger(EventosAPI.class); // Agregar el Logger
-
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     @Autowired
     EventosBL eventosBL;
     @Autowired
@@ -72,6 +72,8 @@ public class EventosAPI {
             response.setMessage("Evento creado");
             response.setData(eventosBL.save(eventos, result));
             emailSenderBL.sendEmailSuscripcion(eventos.getNombre(), eventos.getDescripcion());
+            appLogger.info("Se creó el evento con ID: {}, Nombre: '{}'.",
+                    eventos.getEventoId(), eventos.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al crear el evento", e); // Log en caso de error
@@ -110,6 +112,8 @@ public class EventosAPI {
             response.setStatus(200);
             response.setMessage("Evento actualizado");
             response.setData(eventosBL.updateEventos(eventos, result));
+            appLogger.info("Se actualizó el evento con ID: {}, Nombre: '{}'.",
+                    eventos.getEventoId(), eventos.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al actualizar el evento", e); // Log en caso de error

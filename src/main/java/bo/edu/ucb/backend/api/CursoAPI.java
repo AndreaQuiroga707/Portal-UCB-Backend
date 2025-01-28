@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/cursos")
 public class CursoAPI {
     private static final Logger LOG = LoggerFactory.getLogger(CursoAPI.class);
-
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     @Autowired
     CursoBL cursoBL;
 
@@ -32,6 +32,8 @@ public class CursoAPI {
             response.setStatus(201); // HttpStatus.CREATED
             response.setMessage("Curso creado");
             response.setData(cursoBL.saveCurso(cursos, result));
+            appLogger.info("Se creó el curso con ID: {}, Nombre: '{}'.",
+                    cursos.getCursoId(), cursos.getNombre());
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
             LOG.error("Error al crear el curso", e); // Log en caso de error
@@ -94,6 +96,8 @@ public class CursoAPI {
             response.setStatus(200);
             response.setMessage("Curso actualizado");
             response.setData(cursoBL.updateCurso(cursos, result));
+            appLogger.info("Se actualizó el curso con ID: {}, Nombre: '{}'.",
+                    cursos.getCursoId(), cursos.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al actualizar el curso por ID: {}", id, e); // Log en caso de error

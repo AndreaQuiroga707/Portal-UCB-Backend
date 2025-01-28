@@ -1,5 +1,7 @@
 package bo.edu.ucb.backend.bl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import bo.edu.ucb.backend.dao.FacultadesDAO;
@@ -10,12 +12,14 @@ import org.springframework.validation.BindingResult;
 public class FacultadesBL {
     @Autowired
     private FacultadesDAO facultadesDAO;
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
 
     public FacultadesDTO save(FacultadesDTO facultadesDTO, BindingResult result) {
         if (result.hasErrors()) {
             String errorMessage = result.getFieldErrors().get(0).getDefaultMessage();
             throw new RuntimeException(errorMessage);
         }
+        appLogger.info("Guardando nueva facultad: {}", facultadesDTO.toString());
         return facultadesDAO.save(facultadesDTO);
     }
 

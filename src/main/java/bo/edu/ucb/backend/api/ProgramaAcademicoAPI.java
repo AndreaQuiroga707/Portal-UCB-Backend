@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/programas_academicos")
 public class ProgramaAcademicoAPI {
     private static final Logger LOG = LoggerFactory.getLogger(ProgramaAcademicoAPI.class);
-
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     @Autowired
     ProgramaAcademicoBL programaAcademicoBL;
 
@@ -30,6 +30,8 @@ public class ProgramaAcademicoAPI {
             response.setStatus(200);
             response.setMessage("Programa Académico creado");
             response.setData(programaAcademicoBL.save(programaAcademicoDTO, result));
+            appLogger.info("Se creó el Programa Académico con ID: {}, Nombre: '{}'.",
+                    programaAcademicoDTO.getProgramaId(), programaAcademicoDTO.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al crear el Programa Académico: {}", e.getMessage()); // Log en caso de error

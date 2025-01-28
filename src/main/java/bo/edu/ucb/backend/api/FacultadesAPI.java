@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/facultades")
 public class FacultadesAPI {
     private static final Logger LOG = LoggerFactory.getLogger(FacultadesAPI.class);
-
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     @Autowired
     FacultadesBL facultadesBL;
 
@@ -30,6 +30,8 @@ public class FacultadesAPI {
             response.setStatus(200);
             response.setMessage("facultad creada");
             response.setData(facultadesBL.save(facultadesDTO, result));
+            appLogger.info("Se creó la facultad con ID: {}, Nombre: '{}'.",
+                    facultadesDTO.getFacultadId(), facultadesDTO.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al crear la facultad", e); // Log en caso de error
@@ -89,6 +91,8 @@ public class FacultadesAPI {
             response.setStatus(200);
             response.setMessage("Facultad actualizada");
             response.setData(facultadesBL.updateFacultades(facultadesDTO, result));
+            appLogger.info("Se actualizó la facultad con ID: {}, Nombre: '{}'.",
+                    facultadesDTO.getFacultadId(), facultadesDTO.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al actualizar la facultad", e); // Log en caso de error

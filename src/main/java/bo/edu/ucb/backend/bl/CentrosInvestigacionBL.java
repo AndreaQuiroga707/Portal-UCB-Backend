@@ -2,6 +2,8 @@ package bo.edu.ucb.backend.bl;
 
 import bo.edu.ucb.backend.dao.CentrosInvestigacionDAO;
 import bo.edu.ucb.backend.dto.CentrosInvestigacionDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -13,6 +15,7 @@ import java.util.Optional;
 public class CentrosInvestigacionBL {
     @Autowired
     private CentrosInvestigacionDAO centrosInvestigacionDAO;
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
 
     public List<CentrosInvestigacionDTO> findAllInstitutosInvestigacion() {
         try {
@@ -39,6 +42,8 @@ public class CentrosInvestigacionBL {
         if (result.hasErrors()) {
             throw new RuntimeException(result.getFieldErrors().get(0).getDefaultMessage());
         }
+        appLogger.info("Guardando instituto de investigación con ID: {}, Nombre: '{}', Enlace web: '{}'.",
+                centrosInvestigacionDTO.getIdCentroInvestigacion(), centrosInvestigacionDTO.getNombre(), centrosInvestigacionDTO.getEnlaceWeb());
         return centrosInvestigacionDAO.save(centrosInvestigacionDTO);
     }
 

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/centros/investigaciones")
 public class CentrosInvestigacionAPI {
     private static final Logger LOG = LoggerFactory.getLogger(CentrosInvestigacionAPI.class);
-
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     @Autowired
     private CentrosInvestigacionBL centrosInvestigacionBL;
 
@@ -28,6 +28,7 @@ public class CentrosInvestigacionAPI {
             response.setStatus(200);
             response.setMessage("Lista de Centros de investigación");
             response.setData(centrosInvestigacionBL.findAllInstitutosInvestigacion());
+            appLogger.info("Lista de Centros de investigación");
             return ResponseEntity.ok(response);
         } catch (Exception e){
             LOG.error("Error al listar los Centros de investigación");
@@ -65,6 +66,8 @@ public class CentrosInvestigacionAPI {
             response.setStatus(200);
             response.setMessage("Centro de investigación guardado");
             response.setData(centrosInvestigacionBL.save(centrosInvestigacionDTO, result));
+            appLogger.info("Se creó el Centro de investigación con ID: {}, Nombre: '{}'.",
+                    centrosInvestigacionDTO.getIdCentroInvestigacion(), centrosInvestigacionDTO.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e){
             LOG.error("Error al guardar el Centro de investigación {}",e);
@@ -83,6 +86,7 @@ public class CentrosInvestigacionAPI {
             response.setStatus(200);
             response.setMessage("Centro de investigación eliminado");
             response.setData(centrosInvestigacionBL.deleteInstitutoInvestigacionById(id));
+            appLogger.info("Se eliminó el Centro de investigación con ID: {}", id);
             return ResponseEntity.ok(response);
         } catch (Exception e){
             LOG.error("Error al eliminar el Centro de investigación");
@@ -102,6 +106,8 @@ public class CentrosInvestigacionAPI {
             response.setStatus(200);
             response.setMessage("Centro de investigación actualizado");
             response.setData(centrosInvestigacionBL.updateInstitutoInvestigacion(centrosInvestigacionDTO, result));
+            appLogger.info("Se actualizó el Centro de investigación con ID: {}, Nombre: '{}'.",
+                    centrosInvestigacionDTO.getIdCentroInvestigacion(), centrosInvestigacionDTO.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e){
             LOG.error("Error al actualizar el Centro de investigación {}", e);

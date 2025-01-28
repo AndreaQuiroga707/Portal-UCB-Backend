@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/sociedades/cientificas")
 public class SociedadesCientificasAPI {
     private static final Logger LOG = LoggerFactory.getLogger(SociedadesCientificasAPI.class);
-
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     @Autowired
     private SociedadesCientificasBL sociedadesCientificasBL;
     @GetMapping("/")
@@ -63,6 +63,8 @@ public class SociedadesCientificasAPI {
             response.setStatus(200);
             response.setMessage("Sociedad Cientifica creada");
             response.setData(sociedadesCientificasBL.save(sociedadesCientificasDTO, result));
+            appLogger.info("Se creó la Sociedad Cientifica con ID: {}, Nombre: '{}'.",
+                    sociedadesCientificasDTO.getSociedadId(), sociedadesCientificasDTO.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e){
             LOG.error("Error al crear la Sociedad Cientifica");
@@ -99,6 +101,8 @@ public class SociedadesCientificasAPI {
             response.setStatus(200);
             response.setMessage("Sociedad Cientifica actualizada");
             response.setData(sociedadesCientificasBL.updateSociedadesCientificas(sociedadesCientificasDTO, result));
+            appLogger.info("Se actualizó la Sociedad Cientifica con ID: {}, Nombre: '{}'.",
+                    sociedadesCientificasDTO.getSociedadId(), sociedadesCientificasDTO.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e){
             LOG.error("Error al actualizar la Sociedad Cientifica");

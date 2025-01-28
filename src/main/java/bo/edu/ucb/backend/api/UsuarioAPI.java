@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/usuario")
 public class UsuarioAPI {
     private static final Logger LOG = LoggerFactory.getLogger(UsuarioAPI.class); // Agregar el Logger
-
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     @Autowired
     UsuarioBL usuarioBL;
     @Autowired
@@ -131,6 +131,7 @@ public class UsuarioAPI {
             // Intentar autenticar al usuario
             LoginResponseDto response = authBl.authenticate(request);
             LOG.info("Usuario autenticado con éxito");
+            appLogger.info("Usuario autenticado con éxito: {}", request.getCorreoElectronico());
             return ResponseEntity.ok(response);
 
         } catch (RuntimeException e) {
@@ -180,6 +181,7 @@ public class UsuarioAPI {
             ResponseDTO response = new ResponseDTO();
             response.setStatus(200);
             response.setMessage("Contraseña restablecida con éxito.");
+            appLogger.info("Contraseña restablecida con éxito para: {}", request.toString());
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             LOG.error("Error al restablecer la contraseña: {}", e.getMessage());

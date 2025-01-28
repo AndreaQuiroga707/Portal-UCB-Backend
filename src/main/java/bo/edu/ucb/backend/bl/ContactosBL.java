@@ -2,6 +2,8 @@ package bo.edu.ucb.backend.bl;
 
 import bo.edu.ucb.backend.dao.ContactosDAO;
 import bo.edu.ucb.backend.entity.Contactos;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -13,6 +15,7 @@ import java.util.Optional;
 public class ContactosBL {
     @Autowired
     private ContactosDAO contactosDAO;
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
 
     public List<Contactos> findAllContactos() {
         try {
@@ -39,6 +42,8 @@ public class ContactosBL {
         if (result.hasErrors()) {
             throw new RuntimeException(result.getFieldErrors().get(0).getDefaultMessage());
         }
+        appLogger.info("Guardando contacto con ID: {}, Nombre: '{}', Correo: '{}', Teléfono: '{}'.",
+                contactos.getContactoId(), contactos.getNombre(), contactos.getCorreo(), contactos.getTelefono());
         return contactosDAO.save(contactos);
     }
 

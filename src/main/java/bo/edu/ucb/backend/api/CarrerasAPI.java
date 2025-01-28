@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/api/v1/carreras")
 public class CarrerasAPI {
     private static final Logger LOG = LoggerFactory.getLogger(CarrerasAPI.class);
-
+    private static final Logger appLogger = LoggerFactory.getLogger("APP_LOGGER");
     @Autowired
     private CarrerasBL carrerasBL;
 
@@ -99,6 +99,8 @@ public class CarrerasAPI {
             response.setStatus(200);
             response.setMessage("Carrera guardada");
             response.setData(carrerasBL.save(carreras, result));
+            appLogger.info("Se creó la carrera con ID: {}, Nombre: '{}'.",
+                    carreras.getCarreraId(), carreras.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al guardar la carrera", e);
@@ -118,6 +120,7 @@ public class CarrerasAPI {
             response.setStatus(200);
             response.setMessage("Carrera eliminada");
             response.setData(carrerasBL.deleteCarrerasById(id));
+            appLogger.info("Se eliminó la carrera con ID: {}", id);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al eliminar la carrera", e);
@@ -137,6 +140,8 @@ public class CarrerasAPI {
             response.setStatus(200);
             response.setMessage("Carrera actualizada");
             response.setData(carrerasBL.updateCarreras(carreras, result));
+            appLogger.info("Se actualizó la carrera con ID: {}, Nombre: '{}'.",
+                    carreras.getCarreraId(), carreras.getNombre());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Error al actualizar la carrera", e);

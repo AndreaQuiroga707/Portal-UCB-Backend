@@ -144,31 +144,6 @@ public class AuthBl {
         userRepository.save(user);
     }
 
-//    public void changePassword(int userId, String newPassword) {
-//        Usuarios user = userRepository.findById(userId)
-//                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-//
-//        // Validar la nueva contraseña
-//        if (!esContrasenaValida(newPassword)) {
-//            throw new RuntimeException("La nueva contraseña no cumple con las reglas de seguridad");
-//        }
-//
-//        // Verificar que no coincida con las últimas 6 contraseñas
-//        if (isPasswordInHistory(user.getUsuarioId(), newPassword)) {
-//            throw new RuntimeException("La nueva contraseña no puede coincidir con ninguna de las últimas 6 contraseñas.");
-//        }
-//
-//        // Actualizar la contraseña
-//        String hashedPassword = passwordEncoder.hash(newPassword);
-//        user.setPassword(hashedPassword);
-//        user.setLastPasswordUpdate(new Date());
-//
-//        // Guardar la contraseña en el historial
-//        savePasswordToHistory(userId, hashedPassword);
-//
-//        userRepository.save(user);
-//    }
-
 
     private boolean isPasswordInHistory(int userId, String newPassword) {
         List<String> oldPasswords = passwordHistoryDAO.findLast6PasswordsByUserId(userId);

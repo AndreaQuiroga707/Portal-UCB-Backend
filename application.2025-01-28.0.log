@@ -1,0 +1,81 @@
+2025-01-28 10:26:00 [http-nio-8080-exec-3] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 10:26:01 [http-nio-8080-exec-4] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 10:26:19 [http-nio-8080-exec-9] INFO  APP_LOGGER - Se encontró la carrera con ID: 1
+2025-01-28 10:26:19 [http-nio-8080-exec-10] INFO  APP_LOGGER - Se encontró la carrera con ID: 1
+2025-01-28 10:26:20 [http-nio-8080-exec-3] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 10:26:21 [http-nio-8080-exec-5] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 10:27:14 [http-nio-8080-exec-9] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 10:27:14 [http-nio-8080-exec-8] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 20:18:12 [http-nio-8080-exec-3] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 20:18:12 [http-nio-8080-exec-8] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 20:40:04 [http-nio-8080-exec-7] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 20:40:04 [http-nio-8080-exec-9] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 20:41:41 [http-nio-8080-exec-1] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 20:41:41 [http-nio-8080-exec-8] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 20:51:57 [http-nio-8080-exec-4] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 20:51:57 [http-nio-8080-exec-1] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:06:55 [http-nio-8080-exec-7] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:06:55 [http-nio-8080-exec-9] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:07:09 [http-nio-8080-exec-6] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:07:09 [http-nio-8080-exec-10] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:08:02 [http-nio-8080-exec-3] INFO  APP_LOGGER - Archivo subido exitosamente: DSC_0616.webp
+2025-01-28 21:09:42 [http-nio-8080-exec-1] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:09:42 [http-nio-8080-exec-10] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:12:27 [http-nio-8080-exec-5] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:12:27 [http-nio-8080-exec-10] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:12:57 [http-nio-8080-exec-7] INFO  APP_LOGGER - Archivo subido exitosamente: DSC_0616.webp
+2025-01-28 21:15:01 [http-nio-8080-exec-5] INFO  APP_LOGGER - Archivo subido exitosamente: DSC_0616.webp
+2025-01-28 21:15:07 [http-nio-8080-exec-1] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:15:07 [http-nio-8080-exec-4] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:17:04 [http-nio-8080-exec-7] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:17:04 [http-nio-8080-exec-8] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:26:49 [http-nio-8080-exec-1] INFO  APP_LOGGER - Se creó el evento con ID: 10, Nombre: 'asdfsdf'.
+2025-01-28 21:34:59 [http-nio-8080-exec-1] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:34:59 [http-nio-8080-exec-7] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:37:07 [http-nio-8080-exec-6] INFO  APP_LOGGER - Archivo subido exitosamente: DSC_0616.webp
+2025-01-28 21:37:19 [http-nio-8080-exec-10] INFO  APP_LOGGER - Se creó el evento con ID: 11, Nombre: 'nuevo?'.
+2025-01-28 21:39:23 [http-nio-8080-exec-6] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:39:23 [http-nio-8080-exec-9] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:53:18 [http-nio-8080-exec-5] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 21:53:18 [http-nio-8080-exec-6] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 22:17:44 [http-nio-8080-exec-5] INFO  APP_LOGGER - Archivo subido exitosamente: UCB-Prueba-Aptitud-Academica_web.webp
+2025-01-28 22:17:52 [http-nio-8080-exec-4] INFO  APP_LOGGER - Se creó el evento con ID: 12, Nombre: 'nuevo2'.
+2025-01-28 22:20:29 [http-nio-8080-exec-7] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 22:20:30 [http-nio-8080-exec-3] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 22:27:14 [http-nio-8080-exec-10] INFO  APP_LOGGER - Archivo subido exitosamente: 1.25-web.webp
+2025-01-28 22:27:23 [http-nio-8080-exec-1] INFO  APP_LOGGER - Se creó el evento con ID: 13, Nombre: 'prueba'.
+2025-01-28 22:34:40 [http-nio-8080-exec-2] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 22:34:40 [http-nio-8080-exec-1] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 22:37:48 [http-nio-8080-exec-8] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 22:37:48 [http-nio-8080-exec-1] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 22:40:32 [http-nio-8080-exec-10] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 22:40:32 [http-nio-8080-exec-5] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 22:40:39 [http-nio-8080-exec-9] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 22:40:39 [http-nio-8080-exec-10] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 22:42:05 [http-nio-8080-exec-4] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 22:42:06 [http-nio-8080-exec-3] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 22:42:25 [http-nio-8080-exec-6] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 22:42:25 [http-nio-8080-exec-3] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 22:42:52 [http-nio-8080-exec-5] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 22:42:52 [http-nio-8080-exec-2] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 23:08:26 [http-nio-8080-exec-3] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 23:08:26 [http-nio-8080-exec-10] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 23:13:33 [http-nio-8080-exec-8] INFO  APP_LOGGER - Se actualizó el evento con ID: 9, Nombre: 'Conferencia de IA Avanzadaaa'.
+2025-01-28 23:21:18 [http-nio-8080-exec-1] INFO  APP_LOGGER - Archivo subido exitosamente: UCB-Horizontal.png
+2025-01-28 23:21:25 [http-nio-8080-exec-10] INFO  APP_LOGGER - Se creó el evento con ID: 14, Nombre: 'bbbb'.
+2025-01-28 23:23:00 [http-nio-8080-exec-3] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 23:23:00 [http-nio-8080-exec-7] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 23:25:21 [http-nio-8080-exec-8] INFO  APP_LOGGER - Archivo subido exitosamente: Logo-IICC.webp
+2025-01-28 23:25:28 [http-nio-8080-exec-5] INFO  APP_LOGGER - Se creó el evento con ID: 15, Nombre: 'Prueba de Aptitud Académica'.
+2025-01-28 23:28:05 [http-nio-8080-exec-10] INFO  APP_LOGGER - Se actualizó el evento con ID: 9, Nombre: 'Conferencia de IA Avanzadaaa'.
+2025-01-28 23:28:35 [http-nio-8080-exec-2] INFO  APP_LOGGER - Se creó el evento con ID: 9, Nombre: 'Conferencia de IA Avanzadaaa'.
+2025-01-28 23:29:33 [http-nio-8080-exec-8] INFO  APP_LOGGER - Se actualizó el evento con ID: 15, Nombre: 'Conferencia de IA Avanzadaaa'.
+2025-01-28 23:29:52 [http-nio-8080-exec-9] INFO  APP_LOGGER - Se creó el evento con ID: 15, Nombre: 'Conferencia de IA Avanzadaaa'.
+2025-01-28 23:30:10 [http-nio-8080-exec-5] INFO  APP_LOGGER - Se creó el evento con ID: 16, Nombre: 'Conferencia de IA Avanzadaaa'.
+2025-01-28 23:33:10 [http-nio-8080-exec-4] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 23:33:10 [http-nio-8080-exec-5] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 23:34:05 [http-nio-8080-exec-2] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 23:34:05 [http-nio-8080-exec-9] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-28 23:45:53 [http-nio-8080-exec-2] INFO  APP_LOGGER - Archivo subido exitosamente: UCB-Preuniversitario-Generico_Post_web.webp
+2025-01-28 23:46:02 [http-nio-8080-exec-9] INFO  APP_LOGGER - Archivo subido exitosamente: UCB-Preuniversitario-Generico_Post_web.webp
+2025-01-28 23:50:31 [http-nio-8080-exec-10] INFO  APP_LOGGER - Archivo subido exitosamente: 1.25-web.webp

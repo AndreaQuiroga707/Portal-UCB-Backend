@@ -24,9 +24,28 @@
         </encoder>
     </appender>
 
+    <!-- Appender para logs de login -->
+    <appender name="LOGIN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>login.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>login.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>5</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <!-- Logger para eventos específicos de la aplicación -->
     <logger name="APP_LOGGER" level="${LOG_LEVEL}" additivity="false">
         <appender-ref ref="APP_FILE"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <!-- Logger para eventos de login -->
+    <logger name="LOGIN_LOGGER" level="${LOG_LEVEL}" additivity="false">
+        <appender-ref ref="LOGIN_FILE"/>
         <appender-ref ref="CONSOLE"/>
     </logger>
 
@@ -38,7 +57,7 @@
         <appender-ref ref="CONSOLE"/>
     </logger>
 
-    <!-- Root logger (solo para consola, no incluye APP_FILE) -->
+    <!-- Root logger (solo para consola, no incluye APP_FILE ni LOGIN_FILE) -->
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>

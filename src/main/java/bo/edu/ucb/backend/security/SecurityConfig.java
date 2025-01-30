@@ -62,21 +62,21 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/v1/eventos/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/eventos/**").hasAuthority("ADMIN")
 
-                        .requestMatchers(HttpMethod.POST, "/api/v1/sociedades/cientificas/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/sociedades/cientificas/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/sociedades/cientificas/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/sociedades/cientificas/**").hasAuthority("ADMIN2")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/sociedades/cientificas/**").hasAuthority("ADMIN2")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/sociedades/cientificas/**").hasAuthority("ADMIN2")
 
-                        .requestMatchers(HttpMethod.POST, "/api/v1/centros/investigaciones/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/centros/investigaciones/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/centros/investigaciones/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/centros/investigaciones/**").hasAuthority("ADMIN2")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/centros/investigaciones/**").hasAuthority("ADMIN2")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/centros/investigaciones/**").hasAuthority("ADMIN2")
 
-                        .requestMatchers(HttpMethod.POST, "/api/v1/grupos/investigaciones/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/grupos/investigaciones/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/grupos/investigaciones/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/grupos/investigaciones/**").hasAuthority("ADMIN2")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/grupos/investigaciones/**").hasAuthority("ADMIN2")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/grupos/investigaciones/**").hasAuthority("ADMIN2")
 
-                        .requestMatchers(HttpMethod.POST, "/api/v1/institutos/investigaciones/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/institutos/investigaciones/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/institutos/investigaciones/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/institutos/investigaciones/**").hasAuthority("ADMIN2")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/institutos/investigaciones/**").hasAuthority("ADMIN2")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/institutos/investigaciones/**").hasAuthority("ADMIN2")
 
                         .requestMatchers("/api/v1/usuario/**").hasAuthority("GESTOR DE USUARIOS")
                         .requestMatchers("/api/v1/**").permitAll()

@@ -1,13 +1,26 @@
-2025-01-29 02:28:59 [http-nio-8080-exec-8] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: roberto.alanoca@ucb.edu.bo
-2025-01-29 02:29:28 [http-nio-8080-exec-9] ERROR LOGIN_LOGGER - Error durante la autenticación: Contraseña incorrecta
-2025-01-29 02:29:28 [http-nio-8080-exec-9] ERROR LOGIN_LOGGER - Contraseña incorrecta para: administrador.eventos@ucb.edu.bo
-2025-01-29 02:29:41 [http-nio-8080-exec-5] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: administrador.eventos@ucb.edu.bo
-2025-01-29 03:59:25 [http-nio-8080-exec-10] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: administrador.eventos@ucb.edu.bo
-2025-01-29 15:30:45 [http-nio-8080-exec-6] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: roberto.alanoca@ucb.edu.bo
-2025-01-29 15:42:24 [http-nio-8080-exec-7] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: roberto.alanoca@ucb.edu.bo
-2025-01-29 16:35:37 [http-nio-8080-exec-9] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: roberto.alanoca@ucb.edu.bo
-2025-01-29 16:35:55 [http-nio-8080-exec-3] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: roberto.alanoca@ucb.edu.bo
-2025-01-29 16:36:10 [http-nio-8080-exec-4] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: administrador.eventos@ucb.edu.bo
-2025-01-29 17:00:48 [http-nio-8080-exec-1] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: administrador.eventos@ucb.edu.bo
-2025-01-29 18:27:13 [http-nio-8080-exec-9] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: administrador.eventos@ucb.edu.bo
-2025-01-29 21:26:19 [http-nio-8080-exec-8] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: roberto.alanoca@ucb.edu.bo
+2025-01-30 00:25:30 [http-nio-8080-exec-4] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: administrador.eventos@ucb.edu.bo
+2025-01-30 00:26:41 [http-nio-8080-exec-6] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: roberto.alanoca@ucb.edu.bo
+2025-01-30 00:27:26 [http-nio-8080-exec-2] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: administrador.eventos@ucb.edu.bo
+2025-01-30 02:22:18 [http-nio-8080-exec-5] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: roberto.alanoca@ucb.edu.bo
+2025-01-30 02:40:14 [http-nio-8080-exec-4] INFO  LOGIN_LOGGER - Usuario actualizado con ID: 1, Nombre: 'Andreaasfdsfasdf'.
+2025-01-30 02:46:16 [http-nio-8080-exec-6] INFO  LOGIN_LOGGER - Usuario actualizado con ID: 1, Nombre: 'Andrea'.
+2025-01-30 02:46:30 [http-nio-8080-exec-5] INFO  LOGIN_LOGGER - Usuario actualizado con ID: 1, Nombre: 'Andrea'.
+2025-01-30 02:46:46 [http-nio-8080-exec-6] INFO  LOGIN_LOGGER - Usuario actualizado con ID: 2, Nombre: 'Pepe'.
+2025-01-30 02:47:30 [http-nio-8080-exec-7] INFO  LOGIN_LOGGER - Usuario actualizado con ID: 3, Nombre: 'Juano'.
+2025-01-30 02:50:51 [http-nio-8080-exec-9] INFO  LOGIN_LOGGER - Usuario actualizado con ID: 2, Nombre: 'Pepe'.
+2025-01-30 02:51:00 [http-nio-8080-exec-4] INFO  LOGIN_LOGGER - Usuario eliminado por ID: 2
+2025-01-30 02:55:29 [http-nio-8080-exec-6] INFO  LOGIN_LOGGER - Usuario actualizado con ID: 3, Nombre: 'Juano'.
+2025-01-30 02:56:30 [http-nio-8080-exec-3] ERROR LOGIN_LOGGER - Error al eliminar el usuario por ID: 3
+2025-01-30 02:58:22 [http-nio-8080-exec-1] ERROR LOGIN_LOGGER - Error al eliminar el usuario por ID: 3
+2025-01-30 02:58:35 [http-nio-8080-exec-4] ERROR LOGIN_LOGGER - Error al eliminar el usuario por ID: 3
+2025-01-30 02:59:16 [http-nio-8080-exec-10] ERROR LOGIN_LOGGER - Error al eliminar el usuario por ID: 3
+2025-01-30 03:04:29 [http-nio-8080-exec-5] INFO  LOGIN_LOGGER - Usuario actualizado con ID: 1, Nombre: 'Andreaaaaa'.
+2025-01-30 03:04:33 [http-nio-8080-exec-10] ERROR LOGIN_LOGGER - Error al eliminar el usuario por ID: 1
+2025-01-30 03:09:24 [http-nio-8080-exec-4] ERROR LOGIN_LOGGER - Error al eliminar el usuario por ID: 2
+2025-01-30 03:10:04 [http-nio-8080-exec-7] ERROR LOGIN_LOGGER - Error al eliminar el usuario por ID: 3
+2025-01-30 03:21:45 [http-nio-8080-exec-3] INFO  LOGIN_LOGGER - Usuario eliminado por ID: 3
+2025-01-30 03:25:31 [http-nio-8080-exec-10] INFO  LOGIN_LOGGER - Usuario eliminado por ID: 6
+2025-01-30 03:25:41 [http-nio-8080-exec-2] INFO  LOGIN_LOGGER - Usuario eliminado por ID: 9
+2025-01-30 03:27:25 [http-nio-8080-exec-9] INFO  LOGIN_LOGGER - Usuario eliminado por ID: 7
+2025-01-30 03:30:04 [http-nio-8080-exec-6] INFO  LOGIN_LOGGER - Usuario eliminado por ID: 4
+2025-01-30 03:32:16 [http-nio-8080-exec-9] INFO  LOGIN_LOGGER - Usuario eliminado por ID: 11

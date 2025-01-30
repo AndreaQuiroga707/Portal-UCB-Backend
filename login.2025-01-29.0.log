@@ -1,0 +1,13 @@
+2025-01-29 02:28:59 [http-nio-8080-exec-8] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: roberto.alanoca@ucb.edu.bo
+2025-01-29 02:29:28 [http-nio-8080-exec-9] ERROR LOGIN_LOGGER - Error durante la autenticación: Contraseña incorrecta
+2025-01-29 02:29:28 [http-nio-8080-exec-9] ERROR LOGIN_LOGGER - Contraseña incorrecta para: administrador.eventos@ucb.edu.bo
+2025-01-29 02:29:41 [http-nio-8080-exec-5] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: administrador.eventos@ucb.edu.bo
+2025-01-29 03:59:25 [http-nio-8080-exec-10] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: administrador.eventos@ucb.edu.bo
+2025-01-29 15:30:45 [http-nio-8080-exec-6] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: roberto.alanoca@ucb.edu.bo
+2025-01-29 15:42:24 [http-nio-8080-exec-7] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: roberto.alanoca@ucb.edu.bo
+2025-01-29 16:35:37 [http-nio-8080-exec-9] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: roberto.alanoca@ucb.edu.bo
+2025-01-29 16:35:55 [http-nio-8080-exec-3] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: roberto.alanoca@ucb.edu.bo
+2025-01-29 16:36:10 [http-nio-8080-exec-4] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: administrador.eventos@ucb.edu.bo
+2025-01-29 17:00:48 [http-nio-8080-exec-1] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: administrador.eventos@ucb.edu.bo
+2025-01-29 18:27:13 [http-nio-8080-exec-9] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: administrador.eventos@ucb.edu.bo
+2025-01-29 21:26:19 [http-nio-8080-exec-8] INFO  LOGIN_LOGGER - Usuario autenticado con éxito: roberto.alanoca@ucb.edu.bo

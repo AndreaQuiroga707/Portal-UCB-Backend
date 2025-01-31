@@ -13,6 +13,6 @@ public interface PasswordHistoryDAO extends JpaRepository<PasswordHistory, Integ
             "FROM password_history ph " +
             "WHERE ph.user_id = :userId " +
             "ORDER BY ph.created_at DESC " +
-            "LIMIT 6", nativeQuery = true)
+            "LIMIT 6", nativeQuery = true) //Historico para las ultimas 6 contraseñas
     List<String> findLast6PasswordsByUserId(@Param("userId") Integer userId);
 }

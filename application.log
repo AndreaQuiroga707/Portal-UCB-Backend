@@ -1,11 +1,6 @@
-2025-01-30 00:23:29 [http-nio-8080-exec-9] INFO  APP_LOGGER - Se listaron las facultades
-2025-01-30 00:23:29 [http-nio-8080-exec-10] INFO  APP_LOGGER - Se listaron las facultades
-2025-01-30 00:23:30 [http-nio-8080-exec-10] INFO  APP_LOGGER - Se listaron las facultades
-2025-01-30 00:23:30 [http-nio-8080-exec-6] INFO  APP_LOGGER - Se listaron las facultades
-2025-01-30 00:27:37 [http-nio-8080-exec-1] INFO  APP_LOGGER - Se actualizó el evento con ID: 1, Nombre: 'Conferencia de IA Avanzadadisima'.
-2025-01-30 02:19:05 [http-nio-8080-exec-7] INFO  APP_LOGGER - Se listaron las facultades
-2025-01-30 02:19:06 [http-nio-8080-exec-1] INFO  APP_LOGGER - Se listaron las facultades
-2025-01-30 02:19:39 [http-nio-8080-exec-5] INFO  APP_LOGGER - Se actualizó el evento con ID: 1, Nombre: 'Conferencia de IA2 Avanzadadisima'.
-2025-01-30 02:20:25 [http-nio-8080-exec-3] INFO  APP_LOGGER - Archivo subido exitosamente: DSC_8223.webp
-2025-01-30 02:20:34 [http-nio-8080-exec-4] INFO  APP_LOGGER - Se creó el evento con ID: 43, Nombre: 'Roberto'.
-2025-01-30 02:21:00 [http-nio-8080-exec-6] INFO  APP_LOGGER - Se actualizó el evento con ID: 43, Nombre: 'Cuatro'.
+2025-01-31 00:17:48 [http-nio-8080-exec-2] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-31 00:17:48 [http-nio-8080-exec-6] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-31 00:17:57 [http-nio-8080-exec-9] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-31 00:17:57 [http-nio-8080-exec-9] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-31 00:42:16 [http-nio-8080-exec-9] INFO  APP_LOGGER - Se listaron las facultades
+2025-01-31 00:42:16 [http-nio-8080-exec-5] INFO  APP_LOGGER - Se listaron las facultades
